@@ -70,3 +70,12 @@ Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING
 	at com.google.gson.stream.JsonReader.beginObject(JsonReader.java:374)
 	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:165)
 	... 9 more
+
+!ENTRY org.eclipse.equinox.p2.publisher.eclipse 4 0 2020-04-01 21:46:35.015
+!MESSAGE Unable to acquire PluginConverter service during generation for: C:\Program Files\eclipse\plugins\gov.sandia.jess.debug_7.1.0.
+
+!ENTRY org.eclipse.equinox.p2.publisher.eclipse 4 0 2020-04-01 21:46:35.043
+!MESSAGE Unable to acquire PluginConverter service during generation for: C:\Program Files\eclipse\plugins\gov.sandia.jess.editor_7.1.0.
+
+!ENTRY org.eclipse.equinox.p2.publisher.eclipse 4 0 2020-04-01 21:46:35.045
+!MESSAGE Unable to acquire PluginConverter service during generation for: C:\Program Files\eclipse\plugins\gov.sandia.jess.reteview_7.1.0.
