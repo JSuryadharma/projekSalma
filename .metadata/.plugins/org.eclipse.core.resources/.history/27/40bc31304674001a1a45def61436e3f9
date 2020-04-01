@@ -1,0 +1,75 @@
+package Payment;
+
+import java.awt.EventQueue;
+import java.util.ArrayList;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JList;
+import javax.swing.ListModel;
+import javax.swing.JButton;
+
+public class PaymentHistory {
+
+	private JFrame frame;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					PaymentHistory window = new PaymentHistory();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public PaymentHistory() {
+		initialize();
+	}
+	
+	private static ArrayList<Payment> listPayment = new ArrayList<>();
+	
+	private void addPaymentHistory (Payment payment)
+	{
+		this.listPayment.add(payment);
+	}
+	
+	private void displayPaymentHistory()
+	{
+		JList listTransaction = new JList((ListModel) listPayment);
+		listTransaction.setBounds(42, 83, 342, 144);
+		frame.getContentPane().add(listTransaction);
+	
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 422);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("DAFTAR TRANSAKSI");
+		lblNewLabel.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+		lblNewLabel.setBounds(130, 29, 203, 59);
+		frame.getContentPane().add(lblNewLabel);
+	
+		this.displayPaymentHistory();
+		
+		JButton lblReturnFromTransHistory = new JButton("Main Menu");
+		lblReturnFromTransHistory.setBounds(162, 264, 97, 46);
+		frame.getContentPane().add(lblReturnFromTransHistory);
+	}
+}

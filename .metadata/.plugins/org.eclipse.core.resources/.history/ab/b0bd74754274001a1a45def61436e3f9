@@ -1,0 +1,10 @@
+package Payment;
+
+import java.util.Date;
+
+public class Payment {
+
+	private Date paymentDate;
+	private String TreatmentName;
+	pri
+}

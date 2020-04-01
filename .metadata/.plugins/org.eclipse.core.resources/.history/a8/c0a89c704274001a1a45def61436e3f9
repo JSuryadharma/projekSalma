@@ -1,0 +1,8 @@
+package Payment;
+
+public class Payment {
+
+	private Date paymentDate;
+	private String TreatmentName;
+	pri
+}

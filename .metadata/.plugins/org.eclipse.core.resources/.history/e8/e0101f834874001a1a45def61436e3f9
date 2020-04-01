@@ -1,0 +1,8 @@
+package User;
+
+public interface InterfacePremium {
+
+	
+	public double costtReduction();
+	
+}

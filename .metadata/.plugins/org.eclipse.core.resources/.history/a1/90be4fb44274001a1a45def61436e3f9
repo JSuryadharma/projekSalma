@@ -1,0 +1,9 @@
+package Payment;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+public class Payment {
+
+	private ArrayList<Payment>
+}

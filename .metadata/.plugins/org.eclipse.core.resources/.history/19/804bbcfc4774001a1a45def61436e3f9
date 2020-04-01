@@ -1,0 +1,14 @@
+package User;
+
+public class Stylist {
+	
+	
+	public Stylist(String specialization) {
+		super();
+		this.specialization = specialization;
+	}
+
+	private String specialization;
+	
+	
+}

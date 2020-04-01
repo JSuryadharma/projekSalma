@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.wb.internal.swing.model.property.editor.font.FontDialog">
-		<item value="660" key="x"/>
-		<item value="599" key="width"/>
-		<item value="197" key="y"/>
-		<item value="635" key="height"/>
+		<item key="x" value="660"/>
+		<item key="width" value="599"/>
+		<item key="y" value="133"/>
+		<item key="height" value="635"/>
 	</section>
 	<section name="org.eclipse.wb.internal.core.utils.ui.dialogs.StringsDialog">
-		<item value="735" key="x"/>
-		<item value="450" key="width"/>
-		<item value="315" key="y"/>
-		<item value="400" key="height"/>
+		<item key="x" value="735"/>
+		<item key="width" value="450"/>
+		<item key="y" value="315"/>
+		<item key="height" value="400"/>
 	</section>
 	<section name="org.eclipse.wb.internal.swing.model.property.editor.border.BorderDialog">
-		<item value="649" key="x"/>
-		<item value="622" key="width"/>
-		<item value="278" key="y"/>
-		<item value="474" key="height"/>
+		<item key="x" value="649"/>
+		<item key="width" value="622"/>
+		<item key="y" value="278"/>
+		<item key="height" value="474"/>
 	</section>
 </section>

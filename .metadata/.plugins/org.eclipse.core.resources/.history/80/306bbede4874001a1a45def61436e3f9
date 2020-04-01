@@ -1,0 +1,13 @@
+package User;
+
+public abstract class PremiumCustomer extends Customer implements InterfacePremium {
+	
+	private int point;
+	
+	public PremiumCustomer(String UUID, String nama, String email, String password) {
+		super(UUID, nama, email, password);
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+}

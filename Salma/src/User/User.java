@@ -1,11 +1,18 @@
 package User;
 
 public class User {
-	private String UUID;
-	private String nama;
-	private String email;
-	private String password;
+	protected String UUID;
+	protected String nama;
+	protected String email;
+	protected String password;
 	
+	public User(User oldUser)
+	{
+		this.UUID = UUID;
+		this.nama = nama;
+		this.email = email;
+		this.password = password;
+	}
 	
 	public User(String UUID, String nama, String email, String password) {
 		super();

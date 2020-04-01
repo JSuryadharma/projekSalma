@@ -1,0 +1,32 @@
+package User;
+
+public abstract class PremiumCustomer extends Customer implements InterfacePremium {
+	
+	private int point = 0;
+	private double discount = 0f;
+	
+	public PremiumCustomer(String UUID, String nama, String email, String password) {
+		super(UUID, nama, email, password);
+		// TODO Auto-generated constructor stub
+	}
+
+	public int getPoint() {
+		return point;
+	}
+
+	public void setPoint(int point) {
+		this.point = point;
+	}
+
+	public double getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(double discount) {
+		this.discount = discount;
+	}
+	
+	
+	
+	
+}

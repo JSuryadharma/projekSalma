@@ -1,0 +1,12 @@
+package User;
+
+import java.util.Date;
+
+public class Payment_History {
+
+	private Date PaymentDate;
+	private String TreatmentName;
+	private String TransactionID;
+	private int amount;
+	
+}

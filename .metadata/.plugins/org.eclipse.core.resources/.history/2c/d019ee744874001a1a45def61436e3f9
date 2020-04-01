@@ -1,0 +1,7 @@
+package User;
+
+public interface InterfacePremium {
+
+	public int countReduction();
+	
+}

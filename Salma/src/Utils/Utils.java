@@ -1,10 +1,14 @@
 package Utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Utils {
 	
 	public static Scanner scan = new Scanner(System.in);
+	
+	private static SimpleDateFormat dateformat = new SimpleDateFormat();
 	
 	public static int nextInt(int defaultValue){
 		int input;
@@ -101,6 +105,11 @@ public class Utils {
 		}
 		
 		return true;
+	}
+	
+	public static String datetoString (Date date)
+	{
+		return dateformat.format(date);
 	}
 	
 }

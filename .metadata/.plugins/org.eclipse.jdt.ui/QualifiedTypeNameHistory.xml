@@ -2,9 +2,15 @@
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="Menu.MainMenu"/>
 <fullyQualifiedTypeName name="java.util.Scanner"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="Main.Main"/>
 <fullyQualifiedTypeName name="User.User"/>
 <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
 <fullyQualifiedTypeName name="Utils.Utils"/>
+<fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
+<fullyQualifiedTypeName name="java.util.Calendar"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="Payment.Booking"/>
+<fullyQualifiedTypeName name="User.PremiumCustomer"/>
+<fullyQualifiedTypeName name="User.Customer"/>
 </qualifiedTypeNameHistroy>

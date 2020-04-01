@@ -1,0 +1,11 @@
+package Payment;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+public class Payment_History {
+
+	private ArrayList<Payment> listPayment = new ArrayList<>();
+	
+	
+}

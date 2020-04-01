@@ -51,6 +51,12 @@ public class MainMenu {
 		firstFrame.getContentPane().add(buttonLogin);
 		
 		JButton Exit = new JButton("Exit");
+		Exit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				firstFrame.dispose();
+				System.exit(0);
+			}
+		});
 		Exit.setBounds(306, 211, 138, 39);
 		firstFrame.getContentPane().add(Exit);
 		
