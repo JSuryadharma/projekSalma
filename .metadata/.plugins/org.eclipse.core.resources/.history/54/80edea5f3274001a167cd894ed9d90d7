@@ -1,0 +1,21 @@
+package Main;
+
+import java.util.ArrayList;
+
+import Menu.MainMenu;
+import User.User;
+
+public class Main {
+	
+	ArrayList<User> userdata = new ArrayList<User>();
+	
+	public Main() {
+		System.out.println("test");
+		new MainMenu();
+	}
+	
+	public static void main(String[] args) {
+		new Main();
+	}
+
+}
