@@ -1,11 +1,6 @@
 package User;
 
-public class Platinum extends PremiumCustomer {
-
-	public Platinum(String UUID, String nama, String email, String password) {
-		super(UUID, nama, email, password);
-		// TODO Auto-generated constructor stub
-	}
+public class Gold extends PremiumCustomer {
 
 	@Override
 	public int addPoint() {
@@ -30,7 +25,5 @@ public class Platinum extends PremiumCustomer {
 		// TODO Auto-generated method stub
 		return 0;
 	}
- 
-	
-	
+
 }

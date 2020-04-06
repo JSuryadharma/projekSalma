@@ -13,7 +13,7 @@ public class Customer extends User {
 
 	public Customer(Customer OldStdCust)
 	{
-		super(OldStdCust);
+		super();
 		this.UUID = OldStdCust.UUID;
 		this.nama = OldStdCust.nama;
 		this.email = OldStdCust.email;

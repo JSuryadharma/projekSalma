@@ -8,7 +8,7 @@ public abstract class PremiumCustomer extends Customer implements InterfacePremi
 	public PremiumCustomer(Customer oldPremCust)
 	{
 		super(oldPremCust);
-		this.point = 0;
+		this.point = oldPremCust.point;
 	}
 	
 	public PremiumCustomer(String UUID, String nama, String email, String password) {
