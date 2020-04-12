@@ -77,8 +77,9 @@ public class Login {
 								break;
 							}
 						}
-						System.out.println(temp.getNama());
+						
 						if(temp != null){
+							System.out.println(temp.getNama());
 							JOptionPane.showMessageDialog(null, "Data berhasil ditemukan! Selamat datang, " +  temp.getNama());
 							loginFrame.dispose();
 							new manageMenu(temp);

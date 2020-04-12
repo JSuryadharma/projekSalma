@@ -8,12 +8,14 @@ import java.util.Date;
 
 import Menu.MainMenu;
 import Payment.Booking;
+import User.Stylist;
 import User.User;
 
 public class Main {
 	
 	public static ArrayList<User> userdata = new ArrayList<User>();
-
+	public static ArrayList<User> stylistdata = new ArrayList<User>();
+	
 	public static Date date= Calendar.getInstance().getTime();
 	
 	public static void loadPrevData(){
@@ -48,9 +50,34 @@ public class Main {
 		}
 	}
 	
+	public static void loadStylist()
+	{
+		BufferedReader br = null;
+		try{
+			br = new BufferedReader(new FileReader("stylistdata.file"));
+			String tempLine;
+			
+			while((tempLine = br.readLine()) != null){
+				String[] inputData = tempLine.split("#");
+				String UUID = inputData[0];
+				String Name = inputData[1];
+				String Email = inputData[2];
+				String Password = inputData[3];
+				String Specialization = inputData[4];
+				
+				User tempStylist = new Stylist(UUID, Name, Email, Password, Specialization);
+				stylistdata.add(tempStylist);
+				
+			}
+		} catch (Exception e){
+			
+		}
+	}
+	
 	public static void main(String[] args) {
 		loadPrevData();
 		new MainMenu();
 	}
+	
 
 }

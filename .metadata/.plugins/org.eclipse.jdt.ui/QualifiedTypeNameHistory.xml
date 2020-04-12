@@ -9,10 +9,16 @@
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="Payment.Booking"/>
 <fullyQualifiedTypeName name="User.PremiumCustomer"/>
-<fullyQualifiedTypeName name="User.Customer"/>
-<fullyQualifiedTypeName name="java.util.Calendar"/>
 <fullyQualifiedTypeName name="javax.swing.JScrollPane"/>
-<fullyQualifiedTypeName name="java.text.DateFormat"/>
 <fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="java.text.DateFormat"/>
 <fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
+<fullyQualifiedTypeName name="java.util.Calendar"/>
+<fullyQualifiedTypeName name="Menu.makeBooking"/>
+<fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
+<fullyQualifiedTypeName name="User.Customer"/>
+<fullyQualifiedTypeName name="User.Silver"/>
+<fullyQualifiedTypeName name="User.Gold"/>
+<fullyQualifiedTypeName name="User.Platinum"/>
+<fullyQualifiedTypeName name="User.Stylist"/>
 </qualifiedTypeNameHistroy>

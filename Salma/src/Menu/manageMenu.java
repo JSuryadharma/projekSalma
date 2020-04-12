@@ -5,6 +5,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTextPane;
 
+import User.Customer;
+import User.Gold;
+import User.Platinum;
+import User.Silver;
+import User.Stylist;
 import User.User;
 
 import javax.swing.JList;
@@ -21,7 +26,8 @@ import javax.swing.JTextField;
 import java.awt.Font;
 
 public class manageMenu {
-
+	
+	private JLabel labelRole = new JLabel("<dynamic>");
 	private JFrame manageFrame;
 	private User currUser;
 	private JTextField dateShowTF;
@@ -33,8 +39,32 @@ public class manageMenu {
 		super();
 		this.currUser = currUser;
 		initialize();
-		dateShowTF.setText("Today's date: " + " " + dateFormat.format(date));
-		dateShowTF.setEditable(false);
+		
+		System.out.println(currUser.getClass());
+		if(currUser instanceof Stylist)
+		{	
+			labelRole.setText("Stylist");
+		}
+		
+		else if (currUser instanceof Customer)
+		{
+			labelRole.setText("Regular Customer");
+		}
+		
+		else if(currUser instanceof Silver)
+		{
+			labelRole.setText("Premium Silver");
+		}
+		
+		else if(currUser instanceof Gold)
+		{
+			labelRole.setText("Premium Gold");
+		}
+		
+		else if(currUser instanceof Platinum)
+		{
+			labelRole.setText("Premium Platinum");
+		}
 	}
 
 	private void initialize() {
@@ -45,6 +75,12 @@ public class manageMenu {
 		manageFrame.getContentPane().setLayout(null);
 		
 		JButton btnNewButton = new JButton("Make a booking");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				manageFrame.dispose();
+				new makeBooking();
+			}
+		});
 		btnNewButton.setBounds(273, 190, 167, 65);
 		manageFrame.getContentPane().add(btnNewButton);
 		
@@ -97,11 +133,25 @@ public class manageMenu {
 		btnViewBookings.setBounds(273, 342, 167, 65);
 		manageFrame.getContentPane().add(btnViewBookings);
 		
+		
 		dateShowTF = new JTextField();
 		dateShowTF.setFont(new Font("Century Gothic", Font.PLAIN, 18));
 		dateShowTF.setBounds(393, 25, 329, 29);
 		manageFrame.getContentPane().add(dateShowTF);
 		dateShowTF.setColumns(10);
+		dateShowTF.setText("Today's date: " + " " + dateFormat.format(date));
+		dateShowTF.setEditable(false);
+		
+		
+		JLabel lblRole = new JLabel("Role:");
+		lblRole.setBounds(42, 129, 56, 16);
+		manageFrame.getContentPane().add(lblRole);
+		
+		lblRole.setVisible(true);
+		labelRole.setVisible(true);
+		labelRole.setBounds(110, 129, 500, 16);
+		manageFrame.getContentPane().add(labelRole);
 		manageFrame.setVisible(true);
+		
 	}
 }

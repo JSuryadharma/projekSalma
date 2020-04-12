@@ -9,6 +9,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import Main.Main;
+import User.Stylist;
 import User.User;
 import Utils.Utils;
 
@@ -18,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
 
 public class Register {
 
@@ -25,6 +27,7 @@ public class Register {
 	private JTextField inputNama;
 	private JTextField inputEmail;
 	private JTextField inputPass;
+	private JTextField SpecializationTextField;
 
 
 	public Register() {
@@ -37,6 +40,47 @@ public class Register {
 		registerFrame.setBounds(100, 100, 551, 454);
 		registerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		registerFrame.getContentPane().setLayout(null);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setToolTipText("Choose your Role");
+		comboBox.addItem("Choose your Role");
+		comboBox.addItem("Customer");
+		comboBox.addItem("Stylist");
+		
+		comboBox.setBounds(150, 279, 224, 37);
+		registerFrame.getContentPane().add(comboBox);
+		
+		SpecializationTextField = new JTextField();
+		SpecializationTextField.setText("Your specialization.");
+		SpecializationTextField.setBounds(270, 358, 104, 23);
+		registerFrame.getContentPane().add(SpecializationTextField);
+		SpecializationTextField.setColumns(10);
+		SpecializationTextField.setVisible(false);
+		
+		JLabel LabelSpecialization = new JLabel("Specialization");
+		LabelSpecialization.setBounds(271, 337, 78, 14);
+		LabelSpecialization.setVisible(false);
+		
+		registerFrame.getContentPane().add(LabelSpecialization);
+	
+		
+		comboBox.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if(comboBox.getSelectedItem().equals("Stylist"))
+				{
+					LabelSpecialization.setVisible(true);
+					SpecializationTextField.setVisible(true);
+				}
+				else
+				{
+					LabelSpecialization.setVisible(false);
+					SpecializationTextField.setVisible(false);
+				}
+			}
+		});
 		
 		JLabel labelNama = new JLabel("Input Nama");
 		labelNama.setBounds(140, 95, 78, 16);
@@ -85,31 +129,59 @@ public class Register {
 					} else {
 						if(!Utils.verifyPass(userPass)){
 							JOptionPane.showMessageDialog(null, "Masukkan Password dengan Benar! Minimum 6 Character! [Alphanumeric]");
-						} else {
-							User temp = null;
-							for(User u : Main.userdata){
-								if(u.authEmail(userEmail)){
-									temp = u;
+						} else {							
+							User tempuser = null;
+							User tempstylist = null;
+							
+							for(User s : Main.stylistdata)
+							{
+								if(s.authEmail(userEmail)){
+									tempstylist = s;
 									break;
 								}
 							}
-							if(temp != null){
+							
+							for(User u : Main.userdata){
+								if(u.authEmail(userEmail)){
+									tempuser = u;
+									break;
+								}
+							}
+							
+							
+							if(tempuser != null || tempstylist != null){
 								JOptionPane.showMessageDialog(null, "Email/Data harus unik!");
+								
 							} else {
-								temp = new User(userUUID, userNama, userEmail, userPass);
-								Main.userdata.add(temp);
-								System.out.println(Main.userdata.size());
-								registerFrame.dispose();
-								new manageMenu(temp);
+								
+								if(comboBox.getSelectedObjects().equals("Stylist"))
+								{
+									String userSpecialization = SpecializationTextField.getText();
+									
+									tempstylist = new Stylist(userUUID, userNama, userEmail, userPass, userSpecialization);
+									Main.stylistdata.add(tempstylist);
+									System.out.println(Main.stylistdata.size());
+									registerFrame.dispose();
+									new manageMenu((Stylist)tempstylist);
+								}
+								
+								else
+								{
+									tempuser = new User(userUUID, userNama, userEmail, userPass);
+									Main.userdata.add(tempuser);
+									System.out.println(Main.userdata.size());
+									registerFrame.dispose();
+									new manageMenu(tempuser);
+								}
 							}
 						}
 					}
 				}
 			}
 		});
-		registerButton.setBounds(187, 296, 141, 47);
-		registerFrame.getContentPane().add(registerButton);
 		
+		registerButton.setBounds(151, 336, 108, 47);
+		registerFrame.getContentPane().add(registerButton);
 		registerFrame.setVisible(true);
 	}
 }
