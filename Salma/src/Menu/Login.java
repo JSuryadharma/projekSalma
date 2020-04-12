@@ -16,6 +16,8 @@ import javax.swing.JTextField;
 import Main.Main;
 import User.User;
 import Utils.Utils;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Login {
 
@@ -78,7 +80,6 @@ public class Login {
 						System.out.println(temp.getNama());
 						if(temp != null){
 							JOptionPane.showMessageDialog(null, "Data berhasil ditemukan! Selamat datang, " +  temp.getNama());
-//							loginFrame.setVisible(false);
 							loginFrame.dispose();
 							new manageMenu(temp);
 						} else {

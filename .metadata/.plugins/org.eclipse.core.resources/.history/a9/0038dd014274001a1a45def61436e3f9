@@ -1,9 +1,0 @@
-package Payment;
-
-public class Booking {
-	private String CreditCardNo;
-	private String CustomerID;
-	private String StylistID;
-	
-	
-}

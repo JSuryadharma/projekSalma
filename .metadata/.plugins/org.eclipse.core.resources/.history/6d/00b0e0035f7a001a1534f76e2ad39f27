@@ -1,0 +1,70 @@
+package Menu;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JTable;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
+
+public class viewBookings {
+
+	private JFrame frame;
+	private JTable table;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					viewBookings window = new viewBookings();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public viewBookings() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 749, 459);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Date", "Service Order", "UUID", "Stylist Name"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, true, true, true
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		table.getColumnModel().getColumn(0).setPreferredWidth(141);
+		table.getColumnModel().getColumn(1).setPreferredWidth(199);
+		table.getColumnModel().getColumn(2).setPreferredWidth(135);
+		table.getColumnModel().getColumn(3).setPreferredWidth(147);
+		table.setBounds(64, 37, 622, 241);
+		frame.getContentPane().add(table);
+	}
+}

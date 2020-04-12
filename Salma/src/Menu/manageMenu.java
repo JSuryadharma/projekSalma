@@ -12,17 +12,29 @@ import javax.swing.AbstractListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import java.awt.Font;
 
 public class manageMenu {
 
 	private JFrame manageFrame;
 	private User currUser;
+	private JTextField dateShowTF;
+	DateFormat dateFormat = new SimpleDateFormat("EEEE , dd/MM/YYYY");
+	Date date = new Date();
+	Calendar calendar = Calendar.getInstance();
 
 	public manageMenu(User currUser) {
 		super();
 		this.currUser = currUser;
 		initialize();
+		dateShowTF.setText("Today's date: " + " " + dateFormat.format(date));
+		dateShowTF.setEditable(false);
 	}
 
 	private void initialize() {
@@ -68,8 +80,28 @@ public class manageMenu {
 				new MainMenu();
 			}
 		});
-		buttonBackToMainMenu.setBounds(273, 268, 167, 65);
+		buttonBackToMainMenu.setBounds(42, 444, 167, 65);
 		manageFrame.getContentPane().add(buttonBackToMainMenu);
+		
+		JButton editButton = new JButton("Edit a booking");
+		editButton.setBounds(273, 266, 167, 65);
+		manageFrame.getContentPane().add(editButton);
+		
+		JButton btnViewBookings = new JButton("View bookings");
+		btnViewBookings.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				manageFrame.dispose();
+				new viewBookings(currUser);
+			}
+		});
+		btnViewBookings.setBounds(273, 342, 167, 65);
+		manageFrame.getContentPane().add(btnViewBookings);
+		
+		dateShowTF = new JTextField();
+		dateShowTF.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+		dateShowTF.setBounds(393, 25, 329, 29);
+		manageFrame.getContentPane().add(dateShowTF);
+		dateShowTF.setColumns(10);
 		manageFrame.setVisible(true);
 	}
 }

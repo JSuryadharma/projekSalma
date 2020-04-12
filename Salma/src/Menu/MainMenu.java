@@ -1,21 +1,65 @@
 package Menu;
 
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.BorderLayout;
 import java.awt.Font;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.PrintWriter;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+
+import Main.Main;
+import Payment.Booking;
+import User.User;
 
 public class MainMenu {
 
 	private JFrame firstFrame;
+	DateFormat dateFormat = new SimpleDateFormat("EEEE , dd/MM/YYYY");
+	Date date = new Date();
+	Calendar calendar = Calendar.getInstance();
+	private JTextField dateShowTF;
 
 	public MainMenu() {
 		initialize();
+		saveData();
+	}
+	
+	public void saveData(){		
+			try {
+				String filePath = "userdata.file";
+				File file = new File(filePath);
+				if(!file.exists()){			
+					file.createNewFile();
+				}
+				PrintWriter pw = new PrintWriter(file);
+				for(User u : Main.userdata){
+					System.out.println(u.getUUID() + "#" + u.getNama() + "#" + u.getEmail() + "#" + u.getPassword());
+					pw.print(u.getUUID() + "#" + u.getNama() + "#" + u.getEmail() + "#" + u.getPassword() + "#");
+					for(Booking bl : u.booklist){
+						pw.print(bl.toString());
+					}
+					pw.println();
+				}
+				pw.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 	}
 
 	private void initialize() {
@@ -54,13 +98,21 @@ public class MainMenu {
 		Exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				firstFrame.dispose();
+				saveData();
+				JOptionPane.showMessageDialog(null, "All Personal Files are Saved Successfully!", "SALMA - Important Message", JOptionPane.INFORMATION_MESSAGE);
 				System.exit(0);
 			}
 		});
 		Exit.setBounds(306, 211, 138, 39);
 		firstFrame.getContentPane().add(Exit);
 		
+		dateShowTF = new JTextField();
+		dateShowTF.setBounds(10, 11, 131, 20);
+		firstFrame.getContentPane().add(dateShowTF);
+		dateShowTF.setColumns(10);
+		dateShowTF.setText(dateFormat.format(date));
+		dateShowTF.setEditable(false);
+		
 		firstFrame.setVisible(true);
 	}
-
 }

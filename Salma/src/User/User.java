@@ -1,10 +1,20 @@
 package User;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+import Payment.Booking;
+
 public class User {
 	protected String UUID;
 	protected String nama;
 	protected String email;
 	protected String password;
+	DateFormat dateFormat = new SimpleDateFormat("EEEE, dd/MM/YY");
+	Date date = new Date();
+	public ArrayList<Booking> booklist = new ArrayList<Booking>();
 	
 	public User(User oldUser)
 	{
@@ -37,7 +47,11 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	
+	public String getPassword(){
+		return this.password;
+	}
+	
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -56,6 +70,12 @@ public class User {
 	
 	public Boolean authEmail(String email){
 		return this.email.equals(email);
+	}
+
+	public void addBookList(String CustomerID, String StylistID, String serviceOrder){
+		String dateSchedule = dateFormat.format(date);
+		Booking temp = new Booking(CustomerID, StylistID, serviceOrder, dateSchedule);
+		booklist.add(temp);
 	}
 	
 }

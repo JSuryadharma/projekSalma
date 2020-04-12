@@ -1,8 +1,0 @@
-package User;
-
-public interface InterfacePremium {
-
-	public int point();
-	public double costReduction();
-	
-}

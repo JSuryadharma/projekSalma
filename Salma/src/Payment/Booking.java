@@ -1,6 +1,10 @@
 package Payment;
 
 import java.awt.EventQueue;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.JFrame;
 
@@ -11,31 +15,28 @@ public class Booking {
 	/**
 	 * Launch the application.
 	 */
-	
-	private String CreditCardNo;
+
 	private String CustomerID;
 	private String StylistID;
-	
-	
-	public void Make_Booking(String CreditCardNo, String CustomerID, String StylistID)
-	{
-		this.CreditCardNo = CreditCardNo;
-		this.CustomerID = CustomerID;
-		this. StylistID = StylistID;
-	}
+	private String dateSchedule;
+	private String serviceOrder;
 	
 	public void Cancel_Booking(String CreditCardNo, String CustomerID, String StylistID)
 	{
 //		for()
 	}
 	
-	public void Display_Booking()
-	{
-		
+	@Override
+	public String toString(){
+		return CustomerID + "#" + StylistID + "#" + serviceOrder + "#" + dateSchedule;
 	}
 	
-	public Booking() {
+	public Booking(String CustomerID, String StylistID, String serviceOrder, String dateSchedule) {
 		initialize();
+		this.CustomerID = CustomerID;
+		this.StylistID = StylistID;
+		this.serviceOrder = serviceOrder;
+		this.dateSchedule = dateSchedule;
 	}
 
 	/**

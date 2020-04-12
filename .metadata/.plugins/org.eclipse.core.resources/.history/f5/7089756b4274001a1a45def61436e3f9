@@ -1,7 +1,0 @@
-package Payment;
-
-public class Payment {
-
-	private Date paymentDate;
-	privatae String TreatmentName;
-}

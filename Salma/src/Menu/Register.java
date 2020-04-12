@@ -98,6 +98,7 @@ public class Register {
 							} else {
 								temp = new User(userUUID, userNama, userEmail, userPass);
 								Main.userdata.add(temp);
+								System.out.println(Main.userdata.size());
 								registerFrame.dispose();
 								new manageMenu(temp);
 							}
