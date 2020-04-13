@@ -36,8 +36,8 @@ public class Login {
 		loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		loginFrame.getContentPane().setLayout(null);
 		
-		JLabel labelEmail = new JLabel("Input Email");
-		labelEmail.setBounds(140, 102, 78, 16);
+		JLabel labelEmail = new JLabel("Input Email[exit]");
+		labelEmail.setBounds(140, 102, 103, 16);
 		loginFrame.getContentPane().add(labelEmail);
 		
 		JLabel labelPass = new JLabel("Input Password");
@@ -64,6 +64,11 @@ public class Login {
 			public void actionPerformed(ActionEvent arg0) {
 				String userEmail = inputEmail.getText();
 				String userPass = inputPass.getText();
+				if(userEmail.equals("exit")){
+					loginFrame.dispose();
+					new MainMenu();
+					return;
+				}
 				if(!Utils.verifyEmail(userEmail)){
 					JOptionPane.showMessageDialog(null, "Masukkan Email dengan Benar! Harus dengan @gmail.com dan [Alpha | Num] !");
 				} else {					
@@ -74,6 +79,12 @@ public class Login {
 						for(User u : Main.userdata){
 							if(u.auth(userEmail, userPass)){
 								temp = u;
+								break;
+							}
+						}
+						for(User s : Main.stylistdata){
+							if(s.auth(userEmail, userPass)){
+								temp = s;
 								break;
 							}
 						}
@@ -92,7 +103,7 @@ public class Login {
 		});
 		loginButton.setBounds(187, 230, 141, 47);
 		loginFrame.getContentPane().add(loginButton);
-		
+		loginFrame.setResizable(false);
 		loginFrame.setVisible(true);
 	}
 

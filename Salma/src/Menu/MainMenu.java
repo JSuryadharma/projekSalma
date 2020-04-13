@@ -38,8 +38,6 @@ public class MainMenu {
 
 	public MainMenu() {
 		initialize();
-		saveuserData();
-		savestylistData();
 	}
 	
 	public void saveuserData(){		
@@ -51,8 +49,8 @@ public class MainMenu {
 				}
 				PrintWriter pw = new PrintWriter(file);
 				for(User u : Main.userdata){
-					System.out.println(u.getUUID() + "#" + u.getNama() + "#" + u.getEmail() + "#" + u.getPassword());
-					pw.print(u.getUUID() + "#" + u.getNama() + "#" + u.getEmail() + "#" + u.getPassword());
+					System.out.println(u.getUUID() + "#" + u.getNama() + "#" + u.getEmail() + "#" + u.getPassword() + "#");
+					pw.print(u.getUUID() + "#" + u.getNama() + "#" + u.getEmail() + "#" + u.getPassword() + "#");
 					for(Booking bl : u.booklist){
 						pw.print(bl.toString());
 					}
@@ -108,7 +106,6 @@ public class MainMenu {
 		JButton buttonLogin = new JButton("User Login");
 		buttonLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				firstFrame.setVisible(false);
 				firstFrame.dispose();
 				new Login();
 			}
@@ -135,7 +132,7 @@ public class MainMenu {
 		dateShowTF.setColumns(10);
 		dateShowTF.setText(dateFormat.format(date));
 		dateShowTF.setEditable(false);
-		
+		firstFrame.setResizable(false);
 		firstFrame.setUndecorated(false);
 		firstFrame.setVisible(true);
 	}

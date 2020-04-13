@@ -82,8 +82,8 @@ public class Register {
 			}
 		});
 		
-		JLabel labelNama = new JLabel("Input Nama");
-		labelNama.setBounds(140, 95, 78, 16);
+		JLabel labelNama = new JLabel("Input Nama[exit]");
+		labelNama.setBounds(140, 95, 103, 16);
 		registerFrame.getContentPane().add(labelNama);
 		
 		JLabel labelEmail = new JLabel("Input Email");
@@ -121,6 +121,11 @@ public class Register {
 				String userEmail = inputEmail.getText();
 				String userPass = inputPass.getText();
 				String userUUID = UUID.randomUUID().toString();
+				if(userNama.equals("exit")){
+					registerFrame.dispose();
+					new MainMenu();
+					return;
+				}
 				if(!Utils.verifyName(userNama)){
 					JOptionPane.showMessageDialog(null, "Masukkan Nama dengan Benar! Tidak ada numeric, minimum 4 chars!");
 				} else{					
@@ -148,30 +153,36 @@ public class Register {
 								}
 							}
 							
-							
+							System.out.println("ComboBox: " + comboBox.getSelectedItem().toString());
 							if(tempuser != null || tempstylist != null){
 								JOptionPane.showMessageDialog(null, "Email/Data harus unik!");
 								
 							} else {
 								
-								if(comboBox.getSelectedObjects().equals("Stylist"))
+								if(comboBox.getSelectedItem().equals("Stylist"))
 								{
 									String userSpecialization = SpecializationTextField.getText();
 									
 									tempstylist = new Stylist(userUUID, userNama, userEmail, userPass, userSpecialization);
+									System.out.println("Stylist : " +tempstylist.getClass());
 									Main.stylistdata.add(tempstylist);
-									System.out.println(Main.stylistdata.size());
+//									System.out.println(Main.stylistdata.size());
 									registerFrame.dispose();
 									new manageMenu((Stylist)tempstylist);
 								}
 								
-								else
+								else if(comboBox.getSelectedItem().equals("Customer"))
 								{
 									tempuser = new User(userUUID, userNama, userEmail, userPass);
+									System.out.println("Customer : " +tempuser.getClass());
 									Main.userdata.add(tempuser);
-									System.out.println(Main.userdata.size());
+//									System.out.println(Main.userdata.size());
 									registerFrame.dispose();
 									new manageMenu(tempuser);
+								}
+								
+								else {
+									JOptionPane.showMessageDialog(null, "Please pick your Role!");
 								}
 							}
 						}
@@ -182,6 +193,7 @@ public class Register {
 		
 		registerButton.setBounds(151, 336, 108, 47);
 		registerFrame.getContentPane().add(registerButton);
+		registerFrame.setResizable(false);
 		registerFrame.setVisible(true);
 	}
 }

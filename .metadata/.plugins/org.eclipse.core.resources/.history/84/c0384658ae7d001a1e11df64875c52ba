@@ -1,0 +1,80 @@
+package Menu;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
+
+import Payment.Booking;
+import User.User;
+
+import java.awt.BorderLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JButton;
+
+public class viewBookings {
+
+	private JFrame frame;
+	private User currUser;
+	private JTable bookingtable;
+
+	public viewBookings(User currUser) {
+		this.currUser = currUser;
+		initialize();
+		if(currUser.booklist.size() == 0){
+			JOptionPane.showMessageDialog(null, "You have no Bookings Data to show!");
+		} else {
+			load_table();
+		}
+	}
+	
+	public void load_table(){
+		bookingtable = new JTable();
+		bookingtable.setBounds(59, 45, 598, 295);
+		frame.getContentPane().add(bookingtable);
+		
+		DefaultTableModel model = new DefaultTableModel();
+		model.addColumn("No.");
+		model.addColumn("Customer ID");
+		model.addColumn("Stylist ID");
+		model.addColumn("Stylist Name");
+		model.addColumn("Service Order");
+		model.addColumn("Date Schedule");
+		
+		int no = 1;
+		
+		for(Booking bl : currUser.booklist){
+			model.addRow(new Object[]{
+					no++,
+					bl.getCustomerID(),
+					bl.getStylistID(),
+					bl.getStylistName(),
+					bl.getServiceOrder(),
+					bl.getDateSchedule()
+		
+			});
+		}
+		
+		bookingtable.setModel(model);
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 749, 459);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JButton btnNewButton = new JButton("Back to Manage Menu");
+		btnNewButton.setBounds(262, 351, 196, 39);
+		frame.getContentPane().add(btnNewButton);
+		frame.setVisible(true);
+	}
+}

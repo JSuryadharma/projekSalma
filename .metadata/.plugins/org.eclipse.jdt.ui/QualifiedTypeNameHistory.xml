@@ -2,23 +2,24 @@
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="Menu.MainMenu"/>
 <fullyQualifiedTypeName name="java.util.Scanner"/>
-<fullyQualifiedTypeName name="Main.Main"/>
-<fullyQualifiedTypeName name="User.User"/>
-<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
 <fullyQualifiedTypeName name="Utils.Utils"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
-<fullyQualifiedTypeName name="Payment.Booking"/>
 <fullyQualifiedTypeName name="User.PremiumCustomer"/>
 <fullyQualifiedTypeName name="javax.swing.JScrollPane"/>
 <fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="java.text.DateFormat"/>
 <fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
 <fullyQualifiedTypeName name="java.util.Calendar"/>
-<fullyQualifiedTypeName name="Menu.makeBooking"/>
 <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
 <fullyQualifiedTypeName name="User.Customer"/>
 <fullyQualifiedTypeName name="User.Silver"/>
 <fullyQualifiedTypeName name="User.Gold"/>
 <fullyQualifiedTypeName name="User.Platinum"/>
+<fullyQualifiedTypeName name="User.User"/>
+<fullyQualifiedTypeName name="Main.Main"/>
+<fullyQualifiedTypeName name="javax.swing.table.DefaultTableModel"/>
+<fullyQualifiedTypeName name="Menu.makeBooking"/>
 <fullyQualifiedTypeName name="User.Stylist"/>
+<fullyQualifiedTypeName name="Payment.Booking"/>
+<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
 </qualifiedTypeNameHistroy>

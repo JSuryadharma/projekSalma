@@ -72,9 +72,8 @@ public class User {
 		return this.email.equals(email);
 	}
 
-	public void addBookList(String CustomerID, String StylistID, String serviceOrder){
-		String dateSchedule = dateFormat.format(date);
-		Booking temp = new Booking(CustomerID, StylistID, serviceOrder, dateSchedule);
+	public void addBookList(String CustomerID, String StylistID, String StylistName, String serviceOrder, String dateSchedule){
+		Booking temp = new Booking(CustomerID, StylistID, StylistName, serviceOrder, dateSchedule);
 		booklist.add(temp);
 	}
 	

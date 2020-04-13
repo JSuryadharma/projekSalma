@@ -33,14 +33,17 @@ public class Main {
 				
 				User tempUser = new User(UUID, Name, Email, Password);
 				userdata.add(tempUser);
-				
-				for(int i=4; i<=inputData.length; i = i+4){
+				System.out.println("Customer datas:");
+				System.out.println(UUID + " " + Name + " " + Email+ " " + Password);
+				System.out.println("Bookings:");
+				for(int i=4; i<=inputData.length; i = i+5){
 					String CustID = inputData[i];
 					String StylistID = inputData[i+1];
-					String serviceOrder = inputData[i+2];
-					String dateSchedule = inputData[i+3];
-					
-					Booking tempBook = new Booking(CustID, StylistID, serviceOrder, dateSchedule);
+					String StylistName = inputData[i+2];
+					String serviceOrder = inputData[i+3];
+					String dateSchedule = inputData[i+4];
+					System.out.println(CustID + " " + StylistID + " " + StylistName + " " + serviceOrder + " " + dateSchedule);
+					Booking tempBook = new Booking(CustID, StylistID, StylistName, serviceOrder, dateSchedule);
 					tempUser.booklist.add(tempBook);
 				}
 				
@@ -64,8 +67,10 @@ public class Main {
 				String Email = inputData[2];
 				String Password = inputData[3];
 				String Specialization = inputData[4];
-				
-				User tempStylist = new Stylist(UUID, Name, Email, Password, Specialization);
+
+				System.out.println("Stylist datas:");
+				System.out.println(UUID + " " + Name + " " + Email+ " " + Password + " " + Specialization);
+				Stylist tempStylist = new Stylist(UUID, Name, Email, Password, Specialization);
 				stylistdata.add(tempStylist);
 				
 			}
@@ -76,6 +81,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		loadPrevData();
+		loadStylist();
 		new MainMenu();
 	}
 	

@@ -1,0 +1,119 @@
+package Menu;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JTable;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+
+import User.User;
+
+import javax.swing.JComboBox;
+import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.awt.event.ActionEvent;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JScrollPane;
+
+public class makeBooking {
+
+	Calendar calendar = Calendar.getInstance(); 
+	
+	private JFrame frame;
+	private JTable stylistTable;
+	private JTextField txtServiceType;
+	private User currUser;
+	private JTextField dateShowlbl;
+	private String selectedStylist;
+	private JScrollPane scrollPane;
+
+	/**
+	 * Create the application.
+	 */
+	public makeBooking(User currUser) {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 592, 426);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(53, 66, 204, 271);
+		frame.getContentPane().add(scrollPane);
+		
+		stylistTable = new JTable();
+		scrollPane.setViewportView(stylistTable);
+		
+		JLabel lblPickYourStylish = new JLabel("Pick Your Personal Stylish...");
+		lblPickYourStylish.setFont(new Font("Century Gothic", Font.PLAIN, 13));
+		lblPickYourStylish.setBounds(53, 37, 172, 22);
+		frame.getContentPane().add(lblPickYourStylish);
+		
+		JButton btnMakeABook = new JButton("Book");
+		btnMakeABook.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+//				Booking book = new Booking(curUser.getUUID(), selectedStylist, );
+			}
+		});
+		btnMakeABook.setBounds(355, 203,133, 47);
+		frame.getContentPane().add(btnMakeABook);
+		
+		txtServiceType = new JTextField();
+		txtServiceType.setText("Service Type..");
+		txtServiceType.setBounds(355, 105,133, 20);
+		frame.getContentPane().add(txtServiceType);
+		txtServiceType.setColumns(10);
+		
+		JLabel lblStylistUuid = new JLabel("Service Order");
+		lblStylistUuid.setBounds(355, 80, 76, 14);
+		frame.getContentPane().add(lblStylistUuid);
+		
+		DateFormat dateformat = new SimpleDateFormat("EEEE      ,dd-MM-YYYY");
+		
+		String[] schedule = new String[15];
+		
+		for(int i=1; i<=7; i++)
+		{
+			calendar.add(Calendar.DAY_OF_YEAR, 1);
+			
+			schedule[i] = dateformat.format(calendar.getTime());
+		}
+		
+		JComboBox comboBox = new JComboBox();
+
+		comboBox.addItem("Pick a schedule");
+		
+		for(int i=1; i<=7; i++)
+		{
+			comboBox.addItem(schedule[i]);
+		}
+		
+		comboBox.setBounds(357, 150, 133, 21);
+		comboBox.setToolTipText("Pick a schedule!");
+		
+		
+		frame.getContentPane().add(comboBox);
+		
+		dateShowlbl = new JTextField();
+		dateShowlbl.setBounds(326, 22, 204, 30);
+		
+		dateShowlbl.setEditable(false);
+		dateShowlbl.setText(dateformat.format(calendar.getTime()));
+		
+		frame.getContentPane().add(dateShowlbl);
+		dateShowlbl.setColumns(10);
+		frame.setVisible(true);
+	}
+}

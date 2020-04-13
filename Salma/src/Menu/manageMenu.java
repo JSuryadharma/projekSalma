@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTextPane;
 
+import Main.Main;
+import Payment.Booking;
 import User.Customer;
 import User.Gold;
 import User.Platinum;
@@ -13,10 +15,14 @@ import User.Stylist;
 import User.User;
 
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.AbstractListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -26,10 +32,10 @@ import javax.swing.JTextField;
 import java.awt.Font;
 
 public class manageMenu {
-	
+	JLabel lblRole = new JLabel("Role:");
 	private JLabel labelRole = new JLabel("<dynamic>");
 	private JFrame manageFrame;
-	private User currUser;
+	private User currUser = new User("","","","");
 	private JTextField dateShowTF;
 	DateFormat dateFormat = new SimpleDateFormat("EEEE , dd/MM/YYYY");
 	Date date = new Date();
@@ -41,6 +47,7 @@ public class manageMenu {
 		initialize();
 		
 		System.out.println(currUser.getClass());
+		lblRole.setVisible(true);
 		if(currUser instanceof Stylist)
 		{	
 			labelRole.setText("Stylist");
@@ -65,6 +72,59 @@ public class manageMenu {
 		{
 			labelRole.setText("Premium Platinum");
 		}
+		
+		else
+		{
+			labelRole.setText("None");
+		}
+		labelRole.setVisible(true);
+		JOptionPane.showMessageDialog(null, "Saving datas...");
+		saveuserData();
+		savestylistData();
+		JOptionPane.showMessageDialog(null, "Saving successful!");
+	}
+	
+		public void saveuserData(){		
+			try {
+				String filePath = "userdata.file";
+				File file = new File(filePath);
+				if(!file.exists()){			
+					file.createNewFile();
+				}
+				PrintWriter pw = new PrintWriter(file);
+				for(User u : Main.userdata){
+					System.out.println(u.getUUID() + "#" + u.getNama() + "#" + u.getEmail() + "#" + u.getPassword() + "#");
+					pw.print(u.getUUID() + "#" + u.getNama() + "#" + u.getEmail() + "#" + u.getPassword() + "#");
+					System.out.println("BLSIZE: " + u.booklist.size());
+					for(Booking bl : u.booklist){
+						System.out.println("book: " + bl.toString());
+						pw.print(bl.toString());
+					}
+					pw.println();
+				}
+				pw.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	}
+	
+	public void savestylistData(){		
+		try {
+			String filePath = "stylistdata.file";
+			File file = new File(filePath);
+			if(!file.exists()){			
+				file.createNewFile();
+			}
+			PrintWriter pw = new PrintWriter(file);
+			for(User u : Main.stylistdata){
+				System.out.println(u.getUUID() + "#" + u.getNama() + "#" + u.getEmail() + "#" + u.getPassword());
+				pw.print(u.getUUID() + "#" + u.getNama() + "#" + u.getEmail() + "#" + u.getPassword() + "#" + ((Stylist)u).getSpecialization());
+	
+			}
+			pw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void initialize() {
@@ -78,7 +138,7 @@ public class manageMenu {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				manageFrame.dispose();
-				new makeBooking();
+				new makeBooking(currUser);
 			}
 		});
 		btnNewButton.setBounds(273, 190, 167, 65);
@@ -120,6 +180,11 @@ public class manageMenu {
 		manageFrame.getContentPane().add(buttonBackToMainMenu);
 		
 		JButton editButton = new JButton("Edit a booking");
+		editButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		editButton.setBounds(273, 266, 167, 65);
 		manageFrame.getContentPane().add(editButton);
 		
@@ -143,14 +208,14 @@ public class manageMenu {
 		dateShowTF.setEditable(false);
 		
 		
-		JLabel lblRole = new JLabel("Role:");
 		lblRole.setBounds(42, 129, 56, 16);
 		manageFrame.getContentPane().add(lblRole);
 		
-		lblRole.setVisible(true);
-		labelRole.setVisible(true);
+		lblRole.setVisible(false);
+		labelRole.setVisible(false);
 		labelRole.setBounds(110, 129, 500, 16);
 		manageFrame.getContentPane().add(labelRole);
+		manageFrame.setResizable(false);
 		manageFrame.setVisible(true);
 		
 	}

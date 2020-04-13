@@ -18,25 +18,27 @@ public class Booking {
 
 	private String CustomerID;
 	private String StylistID;
+	private String StylistName;
 	private String dateSchedule;
 	private String serviceOrder;
 	
 	public void Cancel_Booking(String CreditCardNo, String CustomerID, String StylistID)
 	{
-//		for()
+		
 	}
 	
 	@Override
 	public String toString(){
-		return CustomerID + "#" + StylistID + "#" + serviceOrder + "#" + dateSchedule;
+		return CustomerID + "#" + StylistID + "#" + StylistName + "#" + serviceOrder + "#" + dateSchedule + "#";
 	}
 	
-	public Booking(String CustomerID, String StylistID, String serviceOrder, String dateSchedule) {
+	public Booking(String CustomerID, String StylistID, String StylistName, String serviceOrder, String dateSchedule) {
 		initialize();
 		this.CustomerID = CustomerID;
 		this.StylistID = StylistID;
 		this.serviceOrder = serviceOrder;
 		this.dateSchedule = dateSchedule;
+		this.StylistName = StylistName;
 	}
 
 	/**
@@ -48,4 +50,52 @@ public class Booking {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+
+	public String getCustomerID() {
+		return CustomerID;
+	}
+
+	public void setCustomerID(String customerID) {
+		CustomerID = customerID;
+	}
+
+	public String getStylistID() {
+		return StylistID;
+	}
+
+	public void setStylistID(String stylistID) {
+		StylistID = stylistID;
+	}
+
+	public String getDateSchedule() {
+		return dateSchedule;
+	}
+
+	public void setDateSchedule(String dateSchedule) {
+		this.dateSchedule = dateSchedule;
+	}
+
+	public String getServiceOrder() {
+		return serviceOrder;
+	}
+
+	public void setServiceOrder(String serviceOrder) {
+		this.serviceOrder = serviceOrder;
+	}
+
+	public String getStylistName() {
+		return StylistName;
+	}
+
+	public void setStylistName(String stylistName) {
+		StylistName = stylistName;
+	}
+	
 }
