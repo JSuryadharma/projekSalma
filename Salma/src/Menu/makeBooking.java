@@ -14,6 +14,9 @@ import javax.swing.table.DefaultTableModel;
 
 import Main.Main;
 import Payment.Booking;
+import Payment.Payment;
+import User.Customer;
+import User.PremiumCustomer;
 import User.Stylist;
 import User.User;
 
@@ -34,6 +37,7 @@ import java.awt.Color;
 public class makeBooking {
 
 	Calendar calendar = Calendar.getInstance(); 
+	Calendar selection = Calendar.getInstance();
 	
 	private JFrame frame;
 	private JTable stylistTable;
@@ -45,14 +49,17 @@ public class makeBooking {
 	String sUUID = new String("");
 	String sName = new String("");
 	String sSpecialization = new String("");
+	Double sPricing = new Double(0);
 	JLabel inSpecialization;
 	JLabel inName;
 	JLabel inUUID;
+	DateFormat dateformat = new SimpleDateFormat("EEEE ,dd-MM-YYYY");
+	String bookDate = dateformat.format(calendar.getTime());
 	private JButton btnBacktoManageMenu;
+	private JLabel lblPricing;
+	private JLabel inPricing;
+	private JTextField txtYourBalance;
 
-	/**
-	 * Create the application.
-	 */
 	public makeBooking(User currUser) {
 		this.currUser = currUser;
 		initialize();
@@ -70,6 +77,7 @@ public class makeBooking {
 			model.addColumn("UUID");
 			model.addColumn("Name");
 			model.addColumn("Specialization");
+			model.addColumn("Price");
 			int num = 1;
 			for(User s : Main.stylistdata){
 				model.addRow(new Object[]{
@@ -77,15 +85,13 @@ public class makeBooking {
 						s.getUUID(),
 						s.getNama(),
 						((Stylist)s).getSpecialization(),
+						((Stylist)s).getPricing()
 				});
 			}
 			stylistTable.setModel(model);
 		}
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 592, 426);
@@ -104,10 +110,12 @@ public class makeBooking {
 				sUUID = stylistTable.getValueAt(selectedLine, 1).toString();
 				sName = stylistTable.getValueAt(selectedLine, 2).toString();
 				sSpecialization = stylistTable.getValueAt(selectedLine, 3).toString();
+				sPricing = Double.parseDouble(stylistTable.getValueAt(selectedLine, 4).toString());
 				inUUID.setText(sUUID);
 				inName.setText(sName);
 				inSpecialization.setText(sSpecialization);
 				txtServiceType.setText(sSpecialization);
+				inPricing.setText("" + sPricing);
 			}
 		});
 		stylistTable.setAutoResizeMode(0);
@@ -125,12 +133,50 @@ public class makeBooking {
 					System.out.println(sUUID + sName + sSpecialization);
 					JOptionPane.showMessageDialog(null, "Please pick a stylist from table!");
 				} else {
-					String dateSchedule = comboBox.getSelectedItem().toString();
-					Booking book = new Booking(currUser.getUUID(), sUUID, sName, sSpecialization, dateSchedule);
-					currUser.booklist.add(book);
-					JOptionPane.showMessageDialog(null, "Book Added Successfully!");
-					frame.dispose();
-					new manageMenu(currUser);
+					if(currUser instanceof PremiumCustomer){
+						if(((Customer)currUser).getBalance() >= ((PremiumCustomer)currUser).getPricing(sPricing)){
+							
+							double costReduction = ((PremiumCustomer)currUser).costReduction(sPricing);
+							JOptionPane.showMessageDialog(null, "Yey! You just got discount by: " + costReduction);
+							System.out.println("reduction: " + costReduction);
+							
+							((Customer)currUser).reduceBalance(sPricing);
+							double pricing = ((PremiumCustomer)currUser).getPricing(sPricing);
+							JOptionPane.showMessageDialog(null, "Your balance has been reduced by: " + pricing + " !");
+							System.out.println("pricing: " + pricing);
+							
+							String dateSchedule = comboBox.getSelectedItem().toString();
+							Booking book = new Booking(currUser.getUUID(), sUUID, sName, sSpecialization, dateSchedule, bookDate);
+							((Customer)currUser).booklist.add(book);
+							((Customer)currUser).setnTransaksi(((Customer)currUser).getnTransaksi() + 1);
+							
+							JOptionPane.showMessageDialog(null, "Book Added Successfully! Printing Your Payment Receipt...");
+							Payment paymentTemp = new Payment(dateformat.format(calendar.getTime()), sSpecialization, sPricing);
+							((Customer)currUser).addPayment(paymentTemp);
+							frame.dispose();
+							new manageMenu(currUser);
+						} else {
+							JOptionPane.showMessageDialog(null, "Your balance is Insufficient! Please Top Up your balance!");
+						}
+					} else {
+						if(((Customer)currUser).getBalance() >= sPricing){
+							((Customer)currUser).reduceBalance(sPricing);
+							double pricing = (double)sPricing;
+							JOptionPane.showMessageDialog(null, "Your saldo has been reduced by: " + pricing + " !");
+							String dateSchedule = comboBox.getSelectedItem().toString();
+							Booking book = new Booking(currUser.getUUID(), sUUID, sName, sSpecialization, dateSchedule, bookDate);
+							((Customer)currUser).booklist.add(book);
+							((Customer)currUser).setnTransaksi(((Customer)currUser).getnTransaksi() + 1);
+							JOptionPane.showMessageDialog(null, "Book Added Successfully! Printing Your Payment Receipt...");
+							Payment paymentTemp = new Payment(dateformat.format(calendar.getTime()), sSpecialization, sPricing);
+							((Customer)currUser).addPayment(paymentTemp);
+							JOptionPane.showMessageDialog(null, "Book Added Successfully!");
+							frame.dispose();
+							new manageMenu(currUser);
+						} else {
+							JOptionPane.showMessageDialog(null, "Your Saldo is Insufficient! Please Top Up your Saldo!");
+						}
+					}
 				}
 			}
 		});
@@ -142,25 +188,25 @@ public class makeBooking {
 		txtServiceType.setBounds(355, 105,133, 20);
 		frame.getContentPane().add(txtServiceType);
 		txtServiceType.setColumns(10);
+		txtServiceType.setEditable(false);
 		
 		JLabel lblServiceOrder = new JLabel("Service Order");
 		lblServiceOrder.setBounds(355, 80, 76, 14);
 		frame.getContentPane().add(lblServiceOrder);
 		
-		DateFormat dateformat = new SimpleDateFormat("EEEE      ,dd-MM-YYYY");
 		
 		String[] schedule = new String[15];
 		
 		for(int i=1; i<=7; i++)
 		{
-			calendar.add(Calendar.DAY_OF_YEAR, 1);
+			selection.add(Calendar.DAY_OF_YEAR, 1);
 			
-			schedule[i] = dateformat.format(calendar.getTime());
+			schedule[i] = dateformat.format(selection.getTime());
 		}
 		
 		comboBox = new JComboBox();
 
-		comboBox.addItem("Pick a schedule");
+		comboBox.setSelectedItem("Pick a schedule");
 		
 		for(int i=1; i<=7; i++)
 		{
@@ -184,7 +230,7 @@ public class makeBooking {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(326, 267, 196, 81);
+		panel.setBounds(326, 267, 196, 105);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -213,6 +259,14 @@ public class makeBooking {
 		inSpecialization.setBounds(106, 56, 46, 14);
 		panel.add(inSpecialization);
 		
+		lblPricing = new JLabel("Pricing");
+		lblPricing.setBounds(10, 81, 71, 14);
+		panel.add(lblPricing);
+		
+		inPricing = new JLabel("Please select a data..");
+		inPricing.setBounds(106, 81, 46, 14);
+		panel.add(inPricing);
+		
 		btnBacktoManageMenu = new JButton("Back to Manage Menu");
 		btnBacktoManageMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -222,6 +276,18 @@ public class makeBooking {
 		});
 		btnBacktoManageMenu.setBounds(441, 201, 133, 47);
 		frame.getContentPane().add(btnBacktoManageMenu);
+		
+		txtYourBalance = new JTextField();
+		txtYourBalance.setText("Your Balance");
+		txtYourBalance.setBounds(53, 366, 86, 20);
+		txtYourBalance.setText(((Customer)currUser).getBalance().toString());
+		txtYourBalance.setEditable(false);
+		frame.getContentPane().add(txtYourBalance);
+		txtYourBalance.setColumns(10);
+		
+		JLabel lblCurrBalance = new JLabel("Curr Balance:");
+		lblCurrBalance.setBounds(41, 348, 66, 14);
+		frame.getContentPane().add(lblCurrBalance);
 		frame.setResizable(false);
 		frame.setVisible(true);
 	}

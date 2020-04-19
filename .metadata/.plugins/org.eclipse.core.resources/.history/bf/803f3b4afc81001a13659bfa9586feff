@@ -1,0 +1,42 @@
+package User;
+
+public class Platinum extends PremiumCustomer {
+
+	private double discount = 20/100;
+	
+
+	public Platinum(Customer oldUser){
+		super(oldUser);
+	}
+	
+	public Platinum(String UUID, String nama, String email, String password, Integer saldo, Integer point, Integer nTransaksi) {
+		super(UUID, nama, email, password, saldo, point, nTransaksi);
+	}
+
+	@Override
+	public int addPoint() {
+		super.setPoint(super.getPoint() + 20);
+		return 20;
+	}
+
+	@Override
+	public double costReduction() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double setDiscount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getDiscount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+ 
+	
+	
+}

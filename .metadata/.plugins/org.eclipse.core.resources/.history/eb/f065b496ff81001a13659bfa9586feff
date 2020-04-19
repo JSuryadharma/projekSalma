@@ -1,0 +1,49 @@
+package Payment;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+import User.Customer;
+import User.PremiumCustomer;
+
+public class Payment {
+
+	private Date PaymentDate;
+	private String TreatmentName;
+	private String TransactionID;
+	private Integer amount;
+	
+	private static int counter = 0;
+
+	public Payment(Date paymentDate, String treatmentName, int amount) {
+		super();
+		PaymentDate = paymentDate;
+		TreatmentName = treatmentName;
+		String temp = "";
+		temp += "TS-";
+		temp += counter;
+		TransactionID = temp;
+		this.amount = amount;
+		counter++;
+	}
+
+	public Date getPaymentDate() {
+		return PaymentDate;
+	}
+
+	public String getTreatmentName() {
+		return TreatmentName;
+	}
+
+	public String getTransactionID() {
+		return TransactionID;
+	}
+
+	public void setTransactionID(String transactionID) {
+		
+	}
+
+	public double getAmount() {
+		return amount;
+	}
+}

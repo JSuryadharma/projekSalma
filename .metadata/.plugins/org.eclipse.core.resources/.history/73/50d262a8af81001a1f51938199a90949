@@ -1,0 +1,35 @@
+package User;
+
+public class Silver extends PremiumCustomer {
+
+	private double discount = 5/100;
+	
+	public Silver(PremiumCustomer oldPremCust) {
+		super(oldPremCust);
+	}
+	
+	@Override
+	public int addPoint() {
+		
+		return 0;
+	}
+
+	@Override
+	public double costReduction() {
+		
+		return 0;
+	}
+
+	@Override
+	public double setDiscount() {
+		
+		return 0;
+	}
+
+	@Override
+	public double getDiscount() {
+		
+		return 0;
+	}
+
+}

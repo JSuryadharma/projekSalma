@@ -10,6 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
 import Payment.Booking;
+import User.Customer;
 import User.User;
 
 import java.awt.BorderLayout;
@@ -32,7 +33,7 @@ public class viewBookings {
 	public viewBookings(User currUser) {
 		this.currUser = currUser;
 		initialize();
-		if(currUser.booklist.size() == 0){
+		if(((Customer)currUser).booklist.size() == 0){
 			JOptionPane.showMessageDialog(null, "You have no Bookings Data to show!");
 			frame.dispose();
 			new manageMenu(currUser);
@@ -53,7 +54,7 @@ public class viewBookings {
 		
 		int no = 1;
 		
-		for(Booking bl : currUser.booklist){
+		for(Booking bl : ((Customer)currUser).booklist){
 			model.addRow(new Object[]{
 					no++,
 					bl.getCustomerID(),

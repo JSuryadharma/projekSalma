@@ -2,33 +2,31 @@ package User;
 
 public class Gold extends PremiumCustomer {
 
-	public Gold(String UUID, String nama, String email, String password) {
-		super(UUID, nama, email, password);
+	private double discount = 10/100;
+
+	public Gold(Customer oldUser){
+		super(oldUser);
+	}
+	
+	public Gold(String UUID, String nama, String email, String password, Double saldo, Integer point, Integer nTransaksi) {
+		super(UUID, nama, email, password, saldo, point, nTransaksi);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public int addPoint() {
-		// TODO Auto-generated method stub
-		return 0;
+		super.setPoint(super.getPoint() + 15);
+		return 15;
 	}
 
 	@Override
-	public double costReduction() {
-		// TODO Auto-generated method stub
-		return 0;
+	public double costReduction(double price) {
+		return (double)price * discount;
 	}
 
 	@Override
-	public double setDiscount() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public double getDiscount() {
-		// TODO Auto-generated method stub
-		return 0;
+	public double getPricing(double price) {
+		return (double)price - costReduction(price);
 	}
 
 }

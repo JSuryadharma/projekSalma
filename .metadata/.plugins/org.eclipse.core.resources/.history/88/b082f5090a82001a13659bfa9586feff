@@ -1,0 +1,86 @@
+package Menu;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+
+import User.Customer;
+import User.User;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import Payment.Payment;
+
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class viewReceipts {
+
+	private JFrame frame;
+	private User currUser;
+	private JTable ReceiptTable;
+
+	public viewReceipts(User currUser) {
+		this.currUser = currUser;
+		initialize();
+		if(((Customer)currUser).receipt.size() > 0){
+			load_table();
+		} else {
+			JOptionPane.showMessageDialog(null, "You have no receipt! Please make a booking first!");
+		}
+	}
+	
+	public void load_table(){
+		DefaultTableModel model = new DefaultTableModel();
+		model.addColumn("No.");
+		model.addColumn("Payment Date");
+		model.addColumn("Treatment");
+		model.addColumn("Transaction ID");
+		model.addColumn("Amount");
+		
+		int no = 1;
+		for(Payment p : ((Customer)currUser).receipt){
+			model.addRow(new Object[] {
+				no++,
+				p.getPaymentDate(),
+				p.getTransactionID(),
+				p.getAmount()
+			});
+		}
+		ReceiptTable.setModel(model);
+	}
+
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 774, 468);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JLabel lblViewReceipts = new JLabel("View Receipts");
+		lblViewReceipts.setFont(new Font("Century Gothic", Font.PLAIN, 19));
+		lblViewReceipts.setBounds(40, 25, 147, 25);
+		frame.getContentPane().add(lblViewReceipts);
+		
+		ReceiptTable = new JTable();
+		ReceiptTable.setBounds(50, 61, 662, 263);
+		frame.getContentPane().add(ReceiptTable);
+		
+		JButton btnBackToManage = new JButton("Back to Manage Menu");
+		btnBackToManage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+				new manageMenu(currUser);
+			}
+		});
+		btnBackToManage.setBounds(299, 335, 169, 45);
+		frame.getContentPane().add(btnBackToManage);
+		
+		frame.setResizable(false);
+		frame.setVisible(true);
+	}
+}

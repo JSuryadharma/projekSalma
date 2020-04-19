@@ -21,24 +21,20 @@ public class Booking {
 	private String StylistName;
 	private String dateSchedule;
 	private String serviceOrder;
-	
-	public void Cancel_Booking(String CreditCardNo, String CustomerID, String StylistID)
-	{
-		
-	}
-	
+	private String bookDate;
 	@Override
 	public String toString(){
-		return CustomerID + "#" + StylistID + "#" + StylistName + "#" + serviceOrder + "#" + dateSchedule + "#";
+		return CustomerID + "#" + StylistID + "#" + StylistName + "#" + serviceOrder + "#" + dateSchedule + "#" + bookDate + "#";
 	}
 	
-	public Booking(String CustomerID, String StylistID, String StylistName, String serviceOrder, String dateSchedule) {
+	public Booking(String CustomerID, String StylistID, String StylistName, String serviceOrder, String dateSchedule, String bookDate) {
 		initialize();
 		this.CustomerID = CustomerID;
 		this.StylistID = StylistID;
 		this.serviceOrder = serviceOrder;
 		this.dateSchedule = dateSchedule;
 		this.StylistName = StylistName;
+		this.bookDate = bookDate;
 	}
 
 	/**

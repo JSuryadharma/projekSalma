@@ -1,0 +1,53 @@
+package User;
+
+import java.util.ArrayList;
+
+import Payment.Booking;
+import Payment.Payment;
+
+public class Customer extends User {
+	
+	private Integer saldo = new Integer(0);
+	private Integer nTransaksi = new Integer(0);
+	public ArrayList<Payment> receipt = new ArrayList<Payment>();
+	
+	public Customer(Customer OldStdCust)
+	{
+		super(OldStdCust);
+		this.UUID = OldStdCust.UUID;
+		this.nama = OldStdCust.nama;
+		this.email = OldStdCust.email;
+		this.password = OldStdCust.password;
+	}
+	
+	public Customer(String UUID, String nama, String email, String password, Integer saldo, Integer nTransaksi) {
+		super(UUID, nama, email, password);
+		this.saldo = saldo;
+		this.nTransaksi = nTransaksi;
+	}
+
+	public Integer getSaldo() {
+		return saldo;
+	}
+
+	public void topUp(Integer saldo) {
+		this.saldo = this.saldo + saldo;
+	}
+	
+	public void reduceSaldo(Integer price){
+		this.saldo = this.saldo - price;
+	}
+
+	public Integer getnTransaksi() {
+		return nTransaksi;
+	}
+
+	public void setnTransaksi(Integer nTransaksi) {
+		this.nTransaksi = nTransaksi;
+	}
+	
+	public void addPayment(Payment payment){
+		receipt.add(payment);
+	}
+	
+}

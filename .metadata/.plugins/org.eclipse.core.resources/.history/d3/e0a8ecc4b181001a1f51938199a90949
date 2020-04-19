@@ -1,0 +1,36 @@
+package User;
+
+public class Gold extends PremiumCustomer {
+
+	private double discount = 10/100;
+	
+	public Gold(String UUID, String nama, String email, String password, Integer saldo, Integer point) {
+		super(UUID, nama, email, password, saldo, point);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public int addPoint() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double costReduction() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double setDiscount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double getDiscount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

@@ -25,6 +25,10 @@ import javax.swing.JTextField;
 
 import Main.Main;
 import Payment.Booking;
+import User.Customer;
+import User.Gold;
+import User.Platinum;
+import User.Silver;
 import User.Stylist;
 import User.User;
 
@@ -49,10 +53,22 @@ public class MainMenu {
 				}
 				PrintWriter pw = new PrintWriter(file);
 				for(User u : Main.userdata){
-					System.out.println(u.getUUID() + "#" + u.getNama() + "#" + u.getEmail() + "#" + u.getPassword() + "#");
-					pw.print(u.getUUID() + "#" + u.getNama() + "#" + u.getEmail() + "#" + u.getPassword() + "#");
-					for(Booking bl : u.booklist){
+					if(u instanceof Silver){
+						System.out.println(u.getUUID() + "#" + u.getNama() + "#" + u.getEmail() + "#" + u.getPassword() + "#" + ((Customer)u).getBalance() + "#" + "Silver" + "#" + ((Silver)u).getPoint() + "#" + ((Customer)u).getnTransaksi() + "#");
+						pw.print(u.getUUID() + "#" + u.getNama() + "#" + u.getEmail() + "#" + u.getPassword() + "#" + ((Customer)u).getBalance() + "#" + "Silver" + "#" + ((Silver)u).getPoint() + "#" + ((Customer)u).getnTransaksi() + "#");
+					} else if(u instanceof Gold){
+						System.out.println(u.getUUID() + "#" + u.getNama() + "#" + u.getEmail() + "#" + u.getPassword() + "#" + ((Customer)u).getBalance() + "#" + "Gold" + "#" + ((Gold)u).getPoint() + "#" + ((Customer)u).getnTransaksi() + "#");
+						pw.print(u.getUUID() + "#" + u.getNama() + "#" + u.getEmail() + "#" + u.getPassword() + "#" + ((Customer)u).getBalance() + "#" + "Gold" + "#" + ((Gold)u).getPoint() + "#" + ((Customer)u).getnTransaksi() + "#");
+					} else if(u instanceof Platinum){
+						System.out.println(u.getUUID() + "#" + u.getNama() + "#" + u.getEmail() + "#" + u.getPassword() + "#" + ((Customer)u).getBalance() + "#" + "Platinum" + "#" + ((Platinum)u).getPoint() + "#" + ((Customer)u).getnTransaksi() + "#");
+						pw.print(u.getUUID() + "#" + u.getNama() + "#" + u.getEmail() + "#" + u.getPassword() + "#" + ((Customer)u).getBalance() + "#" + "Platinum" + "#" + ((Platinum)u).getPoint() + "#" + ((Customer)u).getnTransaksi() + "#");
+					} else if(u instanceof Customer){
+						System.out.println(u.getUUID() + "#" + u.getNama() + "#" + u.getEmail() + "#" + u.getPassword() + "#" + ((Customer)u).getBalance() + "#" + "Customer" + "#" + 0 + "#" + ((Customer)u).getnTransaksi() + "#");
+						pw.print(u.getUUID() + "#" + u.getNama() + "#" + u.getEmail() + "#" + u.getPassword() + "#" + ((Customer)u).getBalance() + "#" + "Customer" + "#" + 0 + "#" + ((Customer)u).getnTransaksi() + "#");
+					}
+					for(Booking bl : ((Customer)u).booklist){
 						pw.print(bl.toString());
+						System.out.print(bl.toString());
 					}
 					pw.println();
 				}
@@ -71,8 +87,8 @@ public class MainMenu {
 			}
 			PrintWriter pw = new PrintWriter(file);
 			for(User u : Main.stylistdata){
-				System.out.println(u.getUUID() + "#" + u.getNama() + "#" + u.getEmail() + "#" + u.getPassword());
-				pw.print(u.getUUID() + "#" + u.getNama() + "#" + u.getEmail() + "#" + u.getPassword() + "#" + ((Stylist)u).getSpecialization());
+				System.out.println(u.getUUID() + "#" + u.getNama() + "#" + u.getEmail() + "#" + u.getPassword() + "#" + ((Stylist)u).getSpecialization() + "#" + ((Stylist)u).getPricing());
+				pw.print(u.getUUID() + "#" + u.getNama() + "#" + u.getEmail() + "#" + u.getPassword() + "#" + ((Stylist)u).getSpecialization() + "#" + ((Stylist)u).getPricing());
 
 			}
 			pw.close();
@@ -100,7 +116,7 @@ public class MainMenu {
 				new Register();
 			}
 		});
-		buttonRegister.setBounds(306, 107, 138, 39);
+		buttonRegister.setBounds(281, 109, 183, 64);
 		firstFrame.getContentPane().add(buttonRegister);
 		
 		JButton buttonLogin = new JButton("User Login");
@@ -110,7 +126,7 @@ public class MainMenu {
 				new Login();
 			}
 		});
-		buttonLogin.setBounds(306, 159, 138, 39);
+		buttonLogin.setBounds(281, 197, 183, 64);
 		firstFrame.getContentPane().add(buttonLogin);
 		
 		JButton Exit = new JButton("Exit");
@@ -123,7 +139,7 @@ public class MainMenu {
 				System.exit(0);
 			}
 		});
-		Exit.setBounds(306, 211, 138, 39);
+		Exit.setBounds(281, 288, 183, 64);
 		firstFrame.getContentPane().add(Exit);
 		
 		dateShowTF = new JTextField();
@@ -132,6 +148,10 @@ public class MainMenu {
 		dateShowTF.setColumns(10);
 		dateShowTF.setText(dateFormat.format(date));
 		dateShowTF.setEditable(false);
+		
+		JLabel lblNewLabel = new JLabel("New! Reminder for Users to exit this program via Exit button above!  Otherwise, your data might be gone.");
+		lblNewLabel.setBounds(127, 373, 519, 14);
+		firstFrame.getContentPane().add(lblNewLabel);
 		firstFrame.setResizable(false);
 		firstFrame.setUndecorated(false);
 		firstFrame.setVisible(true);

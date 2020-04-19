@@ -1,0 +1,24 @@
+package Menu;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+
+import User.User;
+
+public class viewReceipts {
+
+	private JFrame frame;
+	private User currUser;
+
+	public viewReceipts(User currUser) {
+		initialize();
+	}
+
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+}

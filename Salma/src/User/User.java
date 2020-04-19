@@ -14,7 +14,6 @@ public class User {
 	protected String password;
 	DateFormat dateFormat = new SimpleDateFormat("EEEE, dd/MM/YY");
 	Date date = new Date();
-	public ArrayList<Booking> booklist = new ArrayList<Booking>();
 	
 	public User(User oldUser)
 	{
@@ -70,11 +69,6 @@ public class User {
 	
 	public Boolean authEmail(String email){
 		return this.email.equals(email);
-	}
-
-	public void addBookList(String CustomerID, String StylistID, String StylistName, String serviceOrder, String dateSchedule){
-		Booking temp = new Booking(CustomerID, StylistID, StylistName, serviceOrder, dateSchedule);
-		booklist.add(temp);
 	}
 	
 }

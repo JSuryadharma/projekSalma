@@ -8,56 +8,38 @@ import User.PremiumCustomer;
 
 public class Payment {
 
-	private Date PaymentDate;
+	private String PaymentDate;
 	private String TreatmentName;
 	private String TransactionID;
-	private double amount;
+	private Double amount;
 	
 	private static int counter = 0;
 
-	public Date getPaymentDate() {
-		return PaymentDate;
+	public Payment(String paymentDate, String treatmentName, Double amount) {
+		super();
+		PaymentDate = paymentDate;
+		TreatmentName = treatmentName;
+		String temp = "";
+		temp += "TS-";
+		temp += counter;
+		TransactionID = temp;
+		this.amount = amount;
+		counter++;
 	}
 
-	public void setPaymentDate(Date paymentDate) {
-		PaymentDate = paymentDate;
+	public String getPaymentDate() {
+		return PaymentDate;
 	}
 
 	public String getTreatmentName() {
 		return TreatmentName;
 	}
 
-	public void setTreatmentName(String treatmentName) {
-		TreatmentName = treatmentName;
-	}
-
 	public String getTransactionID() {
 		return TransactionID;
 	}
 
-	public void setTransactionID(String transactionID) {
-		String temp = "";
-		
-		temp += "TS-";
-		
-		temp += counter;
-		
-		counter++;
-		
-		this.TransactionID = temp;
-	}
-
 	public double getAmount() {
 		return amount;
-	}
-
-	public void setAmount(double amount, Customer customer) {
-		
-		double tempamount = 0;
-		
-		if(customer instanceof PremiumCustomer)
-		{
-			tempamount = amount - (amount*((PremiumCustomer)customer).getDiscount());
-		}
 	}
 }

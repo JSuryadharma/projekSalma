@@ -3,7 +3,6 @@ package User;
 public abstract class PremiumCustomer extends Customer implements InterfacePremium {
 	
 	protected int point = 0;
-	private double discount = 0;
 	
 	public PremiumCustomer(Customer oldPremCust)
 	{
@@ -11,9 +10,8 @@ public abstract class PremiumCustomer extends Customer implements InterfacePremi
 		this.point = 0;
 	}
 	
-	public PremiumCustomer(String UUID, String nama, String email, String password) {
-		super(UUID, nama, email, password);
-		// TODO Auto-generated constructor stub
+	public PremiumCustomer(String UUID, String nama, String email, String password, Double saldo, Integer point, Integer nTransaksi) {
+		super(UUID, nama, email, password, saldo, nTransaksi);
 	}
 
 	public int getPoint() {
@@ -24,7 +22,6 @@ public abstract class PremiumCustomer extends Customer implements InterfacePremi
 		this.point = point;
 	}
 
-	public abstract double setDiscount();
-	public abstract double getDiscount();
+	public abstract double getPricing(double price);
 	
 }

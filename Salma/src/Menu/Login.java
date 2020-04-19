@@ -70,10 +70,10 @@ public class Login {
 					return;
 				}
 				if(!Utils.verifyEmail(userEmail)){
-					JOptionPane.showMessageDialog(null, "Masukkan Email dengan Benar! Harus dengan @gmail.com dan [Alpha | Num] !");
+					JOptionPane.showMessageDialog(null, "Please input the correct email! Must ended @gmail.com and [Alpha | Num] !");
 				} else {					
 					if(!Utils.verifyPass(userPass)){
-						JOptionPane.showMessageDialog(null, "Masukkan Password dengan Benar! Minimum 6 Character! [Alphanumeric]");
+						JOptionPane.showMessageDialog(null, "Please input the correct password format! Minimum 6 Character! [Alphanumeric]");
 					} else {
 						User temp = null;
 						for(User u : Main.userdata){
@@ -91,11 +91,11 @@ public class Login {
 						
 						if(temp != null){
 							System.out.println(temp.getNama());
-							JOptionPane.showMessageDialog(null, "Data berhasil ditemukan! Selamat datang, " +  temp.getNama());
+							JOptionPane.showMessageDialog(null, "Data has been found! Welcome, " +  temp.getNama() + " !");
 							loginFrame.dispose();
 							new manageMenu(temp);
 						} else {
-							JOptionPane.showMessageDialog(null, "User email atau password tidak ditemukan!");
+							JOptionPane.showMessageDialog(null, "User email or password not found!");
 						}
 					}
 				}

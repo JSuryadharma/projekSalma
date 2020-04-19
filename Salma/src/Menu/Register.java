@@ -9,6 +9,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import Main.Main;
+import User.Customer;
 import User.Stylist;
 import User.User;
 import Utils.Utils;
@@ -28,6 +29,8 @@ public class Register {
 	private JTextField inputEmail;
 	private JTextField inputPass;
 	private JTextField SpecializationTextField;
+	private JTextField pricingTF;
+	private JLabel lblPricing;
 
 
 	public Register() {
@@ -73,11 +76,15 @@ public class Register {
 				{
 					LabelSpecialization.setVisible(true);
 					SpecializationTextField.setVisible(true);
+					lblPricing.setVisible(true);
+					pricingTF.setVisible(true);
 				}
 				else
 				{
 					LabelSpecialization.setVisible(false);
 					SpecializationTextField.setVisible(false);
+					lblPricing.setVisible(false);
+					pricingTF.setVisible(false);
 				}
 			}
 		});
@@ -162,22 +169,33 @@ public class Register {
 								if(comboBox.getSelectedItem().equals("Stylist"))
 								{
 									String userSpecialization = SpecializationTextField.getText();
+
+									Double userPricing = new Double(-1);
 									
-									tempstylist = new Stylist(userUUID, userNama, userEmail, userPass, userSpecialization);
-									System.out.println("Stylist : " +tempstylist.getClass());
-									Main.stylistdata.add(tempstylist);
-//									System.out.println(Main.stylistdata.size());
-									registerFrame.dispose();
-									new manageMenu((Stylist)tempstylist);
+									try{
+										userPricing = Double.parseDouble(pricingTF.getText());
+									} catch(Exception e){
+										e.printStackTrace();
+									}
+									
+									if(userPricing != -1){
+										tempstylist = new Stylist(userUUID, userNama, userEmail, userPass, userSpecialization, userPricing);
+										System.out.println("Stylist : " +tempstylist.getClass());
+										Main.stylistdata.add(tempstylist);
+										registerFrame.dispose();
+										new manageMenu(tempstylist);
+									} else {
+										JOptionPane.showMessageDialog(null, "Please input Integer to Pricing!");
+									}
 								}
 								
 								else if(comboBox.getSelectedItem().equals("Customer"))
 								{
-									tempuser = new User(userUUID, userNama, userEmail, userPass);
+									tempuser = new Customer(userUUID, userNama, userEmail, userPass, (double)0, 0);
 									System.out.println("Customer : " +tempuser.getClass());
 									Main.userdata.add(tempuser);
-//									System.out.println(Main.userdata.size());
 									registerFrame.dispose();
+									System.out.println("test");
 									new manageMenu(tempuser);
 								}
 								
@@ -193,6 +211,18 @@ public class Register {
 		
 		registerButton.setBounds(151, 336, 108, 47);
 		registerFrame.getContentPane().add(registerButton);
+		
+		pricingTF = new JTextField();
+		pricingTF.setText("Input Pricing");
+		pricingTF.setBounds(384, 359, 91, 22);
+		pricingTF.setVisible(false);
+		registerFrame.getContentPane().add(pricingTF);
+		pricingTF.setColumns(10);
+		
+		lblPricing = new JLabel("Pricing");
+		lblPricing.setBounds(384, 337, 46, 14);
+		lblPricing.setVisible(false);
+		registerFrame.getContentPane().add(lblPricing);
 		registerFrame.setResizable(false);
 		registerFrame.setVisible(true);
 	}
