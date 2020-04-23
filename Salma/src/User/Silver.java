@@ -2,7 +2,7 @@ package User;
 
 public class Silver extends PremiumCustomer {
 
-	private double discount = 5/100;
+	private double discount = 5;
 	
 	public Silver(Customer oldUser){
 		super(oldUser);
@@ -20,7 +20,7 @@ public class Silver extends PremiumCustomer {
 
 	@Override
 	public double costReduction(double price) {
-		return price * discount;
+		return price * discount/100;
 	}
 
 	@Override
@@ -28,4 +28,13 @@ public class Silver extends PremiumCustomer {
 		return price - costReduction(price);
 	}
 
+	public double getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(double discount) {
+		this.discount = discount;
+	}
+
+	
 }

@@ -2,7 +2,7 @@ package User;
 
 public class Platinum extends PremiumCustomer {
 
-	private double discount = 20/100;
+	private double discount = 20;
 	
 
 	public Platinum(Customer oldUser){
@@ -21,7 +21,7 @@ public class Platinum extends PremiumCustomer {
 
 	@Override
 	public double costReduction(double price) {
-		return price * discount;
+		return price * discount/100;
 	}
 
 	@Override

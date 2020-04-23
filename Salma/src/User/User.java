@@ -70,5 +70,22 @@ public class User {
 	public Boolean authEmail(String email){
 		return this.email.equals(email);
 	}
+
+	public DateFormat getDateFormat() {
+		return dateFormat;
+	}
+
+	public void setDateFormat(DateFormat dateFormat) {
+		this.dateFormat = dateFormat;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	
 	
 }

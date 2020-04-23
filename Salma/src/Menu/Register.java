@@ -21,6 +21,11 @@ import java.util.ArrayList;
 import java.util.UUID;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
+import java.awt.Color;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Register {
 
@@ -39,29 +44,33 @@ public class Register {
 
 	private void initialize() {
 		registerFrame = new JFrame();
+		registerFrame.setUndecorated(true);
+		registerFrame.getContentPane().setBackground(Color.WHITE);
 		registerFrame.setTitle("SALMA - Register Page");
-		registerFrame.setBounds(100, 100, 551, 454);
+		registerFrame.setBounds(300, 120, 737, 496);
 		registerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		registerFrame.getContentPane().setLayout(null);
 		
 		JComboBox comboBox = new JComboBox();
+		comboBox.setFont(new Font("Century Gothic", Font.PLAIN, 11));
+		comboBox.setBackground(new Color(255, 228, 181));
 		comboBox.setToolTipText("Choose your Role");
 		comboBox.addItem("Choose your Role");
 		comboBox.addItem("Customer");
 		comboBox.addItem("Stylist");
 		
-		comboBox.setBounds(150, 279, 224, 37);
+		comboBox.setBounds(459, 278, 224, 37);
 		registerFrame.getContentPane().add(comboBox);
 		
 		SpecializationTextField = new JTextField();
 		SpecializationTextField.setText("Your specialization.");
-		SpecializationTextField.setBounds(270, 358, 104, 23);
+		SpecializationTextField.setBounds(572, 348, 111, 23);
 		registerFrame.getContentPane().add(SpecializationTextField);
 		SpecializationTextField.setColumns(10);
 		SpecializationTextField.setVisible(false);
 		
 		JLabel LabelSpecialization = new JLabel("Specialization");
-		LabelSpecialization.setBounds(271, 337, 78, 14);
+		LabelSpecialization.setBounds(572, 326, 78, 14);
 		LabelSpecialization.setVisible(false);
 		
 		registerFrame.getContentPane().add(LabelSpecialization);
@@ -89,50 +98,70 @@ public class Register {
 			}
 		});
 		
-		JLabel labelNama = new JLabel("Input Nama[exit]");
-		labelNama.setBounds(140, 95, 103, 16);
+		JLabel labelNama = new JLabel("Input Nama");
+		labelNama.setBounds(459, 96, 103, 16);
 		registerFrame.getContentPane().add(labelNama);
 		
 		JLabel labelEmail = new JLabel("Input Email");
-		labelEmail.setBounds(140, 159, 78, 16);
+		labelEmail.setBounds(459, 156, 78, 16);
 		registerFrame.getContentPane().add(labelEmail);
 		
 		JLabel labelPass = new JLabel("Input Password");
-		labelPass.setBounds(140, 219, 103, 16);
+		labelPass.setBounds(459, 218, 103, 16);
 		registerFrame.getContentPane().add(labelPass);
 		
 		inputNama = new JTextField();
-		inputNama.setBounds(150, 124, 224, 22);
+		inputNama.setBounds(458, 123, 224, 22);
 		registerFrame.getContentPane().add(inputNama);
 		inputNama.setColumns(10);
 		
 		inputEmail = new JTextField();
 		inputEmail.setColumns(10);
-		inputEmail.setBounds(150, 184, 224, 22);
+		inputEmail.setBounds(459, 183, 224, 22);
 		registerFrame.getContentPane().add(inputEmail);
 		
 		inputPass = new JPasswordField();
 		inputPass.setColumns(10);
-		inputPass.setBounds(150, 246, 224, 22);
+		inputPass.setBounds(459, 245, 224, 22);
 		registerFrame.getContentPane().add(inputPass);
 		
 		JLabel lblRegistrationMenu = new JLabel("Registration Menu");
 		lblRegistrationMenu.setFont(new Font("Century Gothic", Font.PLAIN, 27));
-		lblRegistrationMenu.setBounds(140, 29, 251, 37);
+		lblRegistrationMenu.setBounds(440, 28, 258, 34);
 		registerFrame.getContentPane().add(lblRegistrationMenu);
 		
-		JButton registerButton = new JButton("Daftar");
-		registerButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		pricingTF = new JTextField();
+		pricingTF.setText("Input Pricing");
+		pricingTF.setBounds(459, 348, 91, 22);
+		pricingTF.setVisible(false);
+		registerFrame.getContentPane().add(pricingTF);
+		pricingTF.setColumns(10);
+		
+		lblPricing = new JLabel("Pricing");
+		lblPricing.setBounds(459, 326, 46, 14);
+		lblPricing.setVisible(false);
+		registerFrame.getContentPane().add(lblPricing);
+		
+		JLabel labelBG = new JLabel("");
+		labelBG.setHorizontalAlignment(SwingConstants.CENTER);
+		labelBG.setIcon(new ImageIcon(MainMenu.class.getResource("/IMAGE/SalmaLogo.png")));
+		labelBG.setBounds(43, 64, 314, 367);
+		registerFrame.getContentPane().add(labelBG);
+		
+		JLabel labelBG2 = new JLabel("New label");
+		labelBG2.setIcon(new ImageIcon(MainMenu.class.getResource("/IMAGE/background.jpg")));
+		labelBG2.setBounds(-71, -22, 481, 528);
+		registerFrame.getContentPane().add(labelBG2);
+		
+		JLabel labelDaftar = new JLabel("");
+		labelDaftar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
 				String userNama = inputNama.getText();
 				String userEmail = inputEmail.getText();
 				String userPass = inputPass.getText();
 				String userUUID = UUID.randomUUID().toString();
-				if(userNama.equals("exit")){
-					registerFrame.dispose();
-					new MainMenu();
-					return;
-				}
+	
 				if(!Utils.verifyName(userNama)){
 					JOptionPane.showMessageDialog(null, "Masukkan Nama dengan Benar! Tidak ada numeric, minimum 4 chars!");
 				} else{					
@@ -174,8 +203,8 @@ public class Register {
 									
 									try{
 										userPricing = Double.parseDouble(pricingTF.getText());
-									} catch(Exception e){
-										e.printStackTrace();
+									} catch(Exception ek){
+										ek.printStackTrace();
 									}
 									
 									if(userPricing != -1){
@@ -208,21 +237,23 @@ public class Register {
 				}
 			}
 		});
+		labelDaftar.setHorizontalAlignment(SwingConstants.CENTER);
+		labelDaftar.setIcon(new ImageIcon(MainMenu.class.getResource("/IMAGE/next.png")));
+		labelDaftar.setBounds(449, 389, 113, 81);
+		registerFrame.getContentPane().add(labelDaftar);
 		
-		registerButton.setBounds(151, 336, 108, 47);
-		registerFrame.getContentPane().add(registerButton);
-		
-		pricingTF = new JTextField();
-		pricingTF.setText("Input Pricing");
-		pricingTF.setBounds(384, 359, 91, 22);
-		pricingTF.setVisible(false);
-		registerFrame.getContentPane().add(pricingTF);
-		pricingTF.setColumns(10);
-		
-		lblPricing = new JLabel("Pricing");
-		lblPricing.setBounds(384, 337, 46, 14);
-		lblPricing.setVisible(false);
-		registerFrame.getContentPane().add(lblPricing);
+		JLabel labelBack = new JLabel("");
+		labelBack.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				registerFrame.dispose();
+				new MainMenu();
+			}
+		});
+		labelBack.setHorizontalAlignment(SwingConstants.CENTER);
+		labelBack.setIcon(new ImageIcon(MainMenu.class.getResource("/IMAGE/cancel64.png")));
+		labelBack.setBounds(547, 389, 83, 81);
+		registerFrame.getContentPane().add(labelBack);
 		registerFrame.setResizable(false);
 		registerFrame.setVisible(true);
 	}

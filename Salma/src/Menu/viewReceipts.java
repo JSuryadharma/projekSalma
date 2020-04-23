@@ -18,12 +18,18 @@ import Payment.Payment;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Color;
 
 public class viewReceipts {
 
 	private JFrame frame;
 	private User currUser;
 	private JTable ReceiptTable;
+	private JLabel lblNewLabel;
 
 	public viewReceipts(User currUser) {
 		this.currUser = currUser;
@@ -59,28 +65,34 @@ public class viewReceipts {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 774, 468);
+		frame.getContentPane().setBackground(new Color(255, 255, 240));
+		frame.setBounds(300, 150, 774, 468);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setUndecorated(true);
 		
 		JLabel lblViewReceipts = new JLabel("View Receipts");
 		lblViewReceipts.setFont(new Font("Century Gothic", Font.PLAIN, 19));
-		lblViewReceipts.setBounds(40, 25, 147, 25);
+		lblViewReceipts.setBounds(50, 25, 147, 25);
 		frame.getContentPane().add(lblViewReceipts);
 		
 		ReceiptTable = new JTable();
 		ReceiptTable.setBounds(50, 61, 662, 263);
 		frame.getContentPane().add(ReceiptTable);
 		
-		JButton btnBackToManage = new JButton("Back to Manage Menu");
-		btnBackToManage.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
 				frame.dispose();
 				new manageMenu(currUser);
 			}
 		});
-		btnBackToManage.setBounds(299, 335, 169, 45);
-		frame.getContentPane().add(btnBackToManage);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setIcon(new ImageIcon(MainMenu.class.getResource("/IMAGE/xbutton32.png")));
+		lblNewLabel.setBounds(659, 355, 53, 45);
+		frame.getContentPane().add(lblNewLabel);
 		
 		frame.setResizable(false);
 		frame.setVisible(true);

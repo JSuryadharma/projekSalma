@@ -30,5 +30,6 @@ public class Stylist extends User {
 	public void setPricing(Double pricing) {
 		this.pricing = pricing;
 	}
-
+	
+	
 }

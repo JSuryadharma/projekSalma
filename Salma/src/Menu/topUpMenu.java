@@ -16,6 +16,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
+import java.awt.Color;
 
 public class topUpMenu {
 	private JFrame frame;
@@ -32,35 +35,40 @@ public class topUpMenu {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 634, 466);
+		frame.getContentPane().setBackground(Color.WHITE);
+		frame.setBounds(500, 150, 350, 493);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setUndecorated(true);
 		
 		JLabel lblWelcome = new JLabel("Welcome, " + currUser.getNama());
 		lblWelcome.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-		lblWelcome.setBounds(20, 11, 186, 31);
+		lblWelcome.setBounds(91, 25, 186, 31);
 		frame.getContentPane().add(lblWelcome);
 		
 		JLabel lblCurrentSaldo = new JLabel("Current Saldo:");
-		lblCurrentSaldo.setBounds(189, 83, 87, 14);
+		lblCurrentSaldo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCurrentSaldo.setBounds(133, 84, 87, 14);
 		frame.getContentPane().add(lblCurrentSaldo);
 		
 		currSaldoTF = new JTextField(((Customer)currUser).getBalance().toString());
-		currSaldoTF.setBounds(237, 108, 150, 31);
+		currSaldoTF.setBounds(101, 109, 150, 31);
 		frame.getContentPane().add(currSaldoTF);
 		currSaldoTF.setColumns(10);
 		currSaldoTF.setEditable(false);
 		
 		JLabel lblAmountTopUp = new JLabel("Amount Top Up:");
-		lblAmountTopUp.setBounds(189, 154, 87, 14);
+		lblAmountTopUp.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAmountTopUp.setBounds(133, 151, 87, 14);
 		frame.getContentPane().add(lblAmountTopUp);
 		
 		amountTF = new JTextField();
 		amountTF.setColumns(10);
-		amountTF.setBounds(237, 179, 150, 31);
+		amountTF.setBounds(101, 176, 150, 31);
 		frame.getContentPane().add(amountTF);
 		
 		JButton btnTopUp = new JButton("Top Up");
+		btnTopUp.setBackground(new Color(154, 205, 50));
 		btnTopUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				((Customer)currUser).topUp(Integer.parseInt(amountTF.getText()));
@@ -69,20 +77,22 @@ public class topUpMenu {
 				new manageMenu(currUser);
 			}
 		});
-		btnTopUp.setBounds(248, 317, 139, 45);
+		btnTopUp.setBounds(101, 366, 150, 45);
 		frame.getContentPane().add(btnTopUp);
 		
 		JLabel lblAfterTopUp = new JLabel("After Top Up:");
-		lblAfterTopUp.setBounds(189, 221, 87, 14);
+		lblAfterTopUp.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAfterTopUp.setBounds(133, 284, 87, 14);
 		frame.getContentPane().add(lblAfterTopUp);
 		
 		afterTopUpTF = new JTextField();
 		afterTopUpTF.setColumns(10);
-		afterTopUpTF.setBounds(237, 246, 150, 31);
+		afterTopUpTF.setBounds(101, 309, 150, 31);
 		afterTopUpTF.setEditable(false);
 		frame.getContentPane().add(afterTopUpTF);
 		
 		JButton btnCekBalance = new JButton("Cek Balance");
+		btnCekBalance.setBackground(new Color(135, 206, 235));
 		btnCekBalance.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				res = Double.parseDouble(amountTF.getText());
@@ -91,8 +101,13 @@ public class topUpMenu {
 				currSaldoTF.setText(((Customer)currUser).getBalance().toString());
 			}
 		});
-		btnCekBalance.setBounds(411, 183, 98, 23);
+		btnCekBalance.setBounds(122, 235, 98, 23);
 		frame.getContentPane().add(btnCekBalance);
+		
+		JLabel labelBG = new JLabel("");
+		labelBG.setIcon(new ImageIcon(MainMenu.class.getResource("/IMAGE/topup.jpg")));
+		labelBG.setBounds(-70, -45, 430, 586);
+		frame.getContentPane().add(labelBG);
 		
 		frame.setResizable(false);
 		frame.setVisible(true);

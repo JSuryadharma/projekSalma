@@ -24,4 +24,5 @@ public abstract class PremiumCustomer extends Customer implements InterfacePremi
 
 	public abstract double getPricing(double price);
 	
+	
 }

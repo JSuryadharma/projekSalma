@@ -21,9 +21,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.swing.JComboBox;
+import javax.swing.ImageIcon;
+import java.awt.Color;
+import javax.swing.SwingConstants;
 
 public class editBooking {
 
@@ -42,6 +46,9 @@ public class editBooking {
 	private String serviceOrder;
 	private String dateSchedule;
 	private int selectedLine;
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
+	private JLabel lblNewLabel_2;
 
 	public editBooking(User currUser) {
 		this.currUser = currUser;
@@ -91,22 +98,14 @@ public class editBooking {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 749, 459);
+		frame.getContentPane().setBackground(new Color(255, 255, 255));
+		frame.setBounds(300, 120, 749, 459);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setUndecorated(true);
 		frame.getContentPane().setLayout(null);
 		
-		JButton btnNewButton = new JButton("Back to Manage Menu");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-				new manageMenu(currUser);
-			}
-		});
-		btnNewButton.setBounds(262, 351, 196, 39);
-		frame.getContentPane().add(btnNewButton);
-		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(59, 45, 299, 295);
+		scrollPane.setBounds(59, 68, 299, 295);
 		frame.getContentPane().add(scrollPane);
 		bookingTable = new JTable();
 		bookingTable.addMouseListener(new MouseAdapter() {
@@ -125,11 +124,11 @@ public class editBooking {
 		
 		lblEditBookings = new JLabel("Edit Bookings");
 		lblEditBookings.setFont(new Font("Century Gothic", Font.PLAIN, 21));
-		lblEditBookings.setBounds(59, 11, 196, 30);
+		lblEditBookings.setBounds(485, 109, 196, 30);
 		frame.getContentPane().add(lblEditBookings);
 		
 		comboBox = new JComboBox();
-		comboBox.setBounds(446, 107, 196, 30);
+		comboBox.setBounds(485, 186, 196, 30);
 		DateFormat dateformat = new SimpleDateFormat("EEEE ,dd-MM-YYYY");
 		
 		String[] scheduleList = new String[15];
@@ -147,24 +146,48 @@ public class editBooking {
 		frame.getContentPane().add(comboBox);
 		
 		JLabel lblChangeSchedule = new JLabel("Change Schedule");
-		lblChangeSchedule.setBounds(446, 82, 101, 14);
+		lblChangeSchedule.setBounds(485, 161, 101, 14);
 		frame.getContentPane().add(lblChangeSchedule);
 		
 		JButton btnUpdateBooking = new JButton("Update Booking");
 		btnUpdateBooking.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				
+				ArrayList <Booking> currUserBooking = ((Customer)currUser).getBooklist();
+				int transactionsize = currUserBooking.size();
+				
+				boolean isDateExist = false;
+				
+				for(int i=0; i<transactionsize; i++) {
+					
+					String curDate = currUserBooking.get(i).getDateSchedule();
+					String dateSchedule = comboBox.getSelectedItem().toString();
+					
+					if(curDate.equals(dateSchedule)) {
+						isDateExist = true;
+						break;
+					}
+				}
+				
+				if(isDateExist){
+					JOptionPane.showMessageDialog(null, "You already make a booking that day!");
+				}
+				else {
 					dateSchedule = comboBox.getSelectedItem().toString();
 					if(!dateSchedule.equals("")){
-					Booking tempBook = new Booking(cUUID, sUUID, sName, serviceOrder, dateSchedule, dateBook);
-					((Customer)currUser).booklist.set(selectedLine, tempBook);
+						Booking tempBook = new Booking(cUUID, sUUID, sName, serviceOrder, dateSchedule, dateBook);
+						((Customer)currUser).booklist.set(selectedLine, tempBook);
 					load_table();
-				} else {
-					JOptionPane.showMessageDialog(null, "Please pick a replacement date!");
+					} else {
+						JOptionPane.showMessageDialog(null, "Please pick a replacement date!");
+					}
 				}
+					
 			}
 		});
 		btnUpdateBooking.setToolTipText("Update your Booking");
-		btnUpdateBooking.setBounds(423, 187, 124, 39);
+		btnUpdateBooking.setBounds(514, 262, 124, 39);
 		frame.getContentPane().add(btnUpdateBooking);
 		
 		JButton btnDeleteBooking = new JButton("Cancel Booking");
@@ -176,8 +199,31 @@ public class editBooking {
 			}
 		});
 		btnDeleteBooking.setToolTipText("Delete your booking...");
-		btnDeleteBooking.setBounds(557, 187, 124, 39);
+		btnDeleteBooking.setBounds(514, 312, 124, 39);
 		frame.getContentPane().add(btnDeleteBooking);
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(470, 349, 46, 14);
+		frame.getContentPane().add(lblNewLabel);
+		
+		lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon(MainMenu.class.getResource("/IMAGE/background.jpg")));
+		lblNewLabel_1.setBounds(0, -37, 410, 548);
+		frame.getContentPane().add(lblNewLabel_1);
+		
+		lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				frame.dispose();
+				new manageMenu(currUser);
+			}
+			
+		});
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_2.setIcon(new ImageIcon(MainMenu.class.getResource("/IMAGE/xbutton32.png")));
+		lblNewLabel_2.setBounds(673, 27, 66, 44);
+		frame.getContentPane().add(lblNewLabel_2);
 		
 		frame.setResizable(false);
 		frame.setVisible(true);

@@ -21,6 +21,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import java.awt.Font;
+import javax.swing.ImageIcon;
+import java.awt.Color;
+import javax.swing.SwingConstants;
 
 public class viewBookings {
 
@@ -29,6 +32,8 @@ public class viewBookings {
 	private JTable bookingTable;
 	private JScrollPane scrollPane;
 	private JLabel lblViewBookings;
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
 
 	public viewBookings(User currUser) {
 		this.currUser = currUser;
@@ -81,30 +86,41 @@ public class viewBookings {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 749, 459);
+		frame.getContentPane().setBackground(new Color(255, 255, 255));
+		frame.setBounds(300, 120, 749, 459);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
-		JButton btnNewButton = new JButton("Back to Manage Menu");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-				new manageMenu(currUser);
-			}
-		});
-		btnNewButton.setBounds(262, 351, 196, 39);
-		frame.getContentPane().add(btnNewButton);
+		frame.setUndecorated(true);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(59, 45, 598, 295);
+		scrollPane.setBounds(70, 79, 598, 295);
 		frame.getContentPane().add(scrollPane);
 		bookingTable = new JTable();
 		scrollPane.setViewportView(bookingTable);
 		
 		lblViewBookings = new JLabel("View Bookings");
+		lblViewBookings.setHorizontalAlignment(SwingConstants.CENTER);
 		lblViewBookings.setFont(new Font("Century Gothic", Font.PLAIN, 21));
-		lblViewBookings.setBounds(59, 11, 196, 30);
+		lblViewBookings.setBounds(512, 40, 165, 30);
 		frame.getContentPane().add(lblViewBookings);
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(MainMenu.class.getResource("/IMAGE/background.jpg")));
+		lblNewLabel.setBounds(-111, -61, 488, 549);
+		frame.getContentPane().add(lblNewLabel);
+		
+		lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				frame.dispose();
+				new manageMenu(currUser);
+			}
+		});
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setIcon(new ImageIcon(MainMenu.class.getResource("/IMAGE/xbutton32.png")));
+		lblNewLabel_1.setBounds(636, 385, 32, 39);
+		frame.getContentPane().add(lblNewLabel_1);
 		
 		frame.setResizable(false);
 		frame.setVisible(true);

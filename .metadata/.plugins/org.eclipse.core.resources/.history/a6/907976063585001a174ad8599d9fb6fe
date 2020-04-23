@@ -1,0 +1,260 @@
+package Menu;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+import Main.Main;
+import User.Customer;
+import User.Stylist;
+import User.User;
+import Utils.Utils;
+
+import java.awt.Font;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.UUID;
+import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
+import java.awt.Color;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+public class Register {
+
+	private JFrame registerFrame;
+	private JTextField inputNama;
+	private JTextField inputEmail;
+	private JTextField inputPass;
+	private JTextField SpecializationTextField;
+	private JTextField pricingTF;
+	private JLabel lblPricing;
+
+
+	public Register() {
+		initialize();
+	}
+
+	private void initialize() {
+		registerFrame = new JFrame();
+		registerFrame.setUndecorated(true);
+		registerFrame.getContentPane().setBackground(Color.WHITE);
+		registerFrame.setTitle("SALMA - Register Page");
+		registerFrame.setBounds(300, 120, 737, 496);
+		registerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		registerFrame.getContentPane().setLayout(null);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setFont(new Font("Century Gothic", Font.PLAIN, 11));
+		comboBox.setBackground(new Color(255, 228, 181));
+		comboBox.setToolTipText("Choose your Role");
+		comboBox.addItem("Choose your Role");
+		comboBox.addItem("Customer");
+		comboBox.addItem("Stylist");
+		
+		comboBox.setBounds(459, 278, 224, 37);
+		registerFrame.getContentPane().add(comboBox);
+		
+		SpecializationTextField = new JTextField();
+		SpecializationTextField.setText("Your specialization.");
+		SpecializationTextField.setBounds(572, 348, 111, 23);
+		registerFrame.getContentPane().add(SpecializationTextField);
+		SpecializationTextField.setColumns(10);
+		SpecializationTextField.setVisible(false);
+		
+		JLabel LabelSpecialization = new JLabel("Specialization");
+		LabelSpecialization.setBounds(572, 326, 78, 14);
+		LabelSpecialization.setVisible(false);
+		
+		registerFrame.getContentPane().add(LabelSpecialization);
+	
+		
+		comboBox.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if(comboBox.getSelectedItem().equals("Stylist"))
+				{
+					LabelSpecialization.setVisible(true);
+					SpecializationTextField.setVisible(true);
+					lblPricing.setVisible(true);
+					pricingTF.setVisible(true);
+				}
+				else
+				{
+					LabelSpecialization.setVisible(false);
+					SpecializationTextField.setVisible(false);
+					lblPricing.setVisible(false);
+					pricingTF.setVisible(false);
+				}
+			}
+		});
+		
+		JLabel labelNama = new JLabel("Input Nama");
+		labelNama.setBounds(459, 96, 103, 16);
+		registerFrame.getContentPane().add(labelNama);
+		
+		JLabel labelEmail = new JLabel("Input Email");
+		labelEmail.setBounds(459, 156, 78, 16);
+		registerFrame.getContentPane().add(labelEmail);
+		
+		JLabel labelPass = new JLabel("Input Password");
+		labelPass.setBounds(459, 218, 103, 16);
+		registerFrame.getContentPane().add(labelPass);
+		
+		inputNama = new JTextField();
+		inputNama.setBounds(458, 123, 224, 22);
+		registerFrame.getContentPane().add(inputNama);
+		inputNama.setColumns(10);
+		
+		inputEmail = new JTextField();
+		inputEmail.setColumns(10);
+		inputEmail.setBounds(459, 183, 224, 22);
+		registerFrame.getContentPane().add(inputEmail);
+		
+		inputPass = new JPasswordField();
+		inputPass.setColumns(10);
+		inputPass.setBounds(459, 245, 224, 22);
+		registerFrame.getContentPane().add(inputPass);
+		
+		JLabel lblRegistrationMenu = new JLabel("Registration Menu");
+		lblRegistrationMenu.setFont(new Font("Century Gothic", Font.PLAIN, 27));
+		lblRegistrationMenu.setBounds(440, 28, 258, 34);
+		registerFrame.getContentPane().add(lblRegistrationMenu);
+		
+		pricingTF = new JTextField();
+		pricingTF.setText("Input Pricing");
+		pricingTF.setBounds(459, 348, 91, 22);
+		pricingTF.setVisible(false);
+		registerFrame.getContentPane().add(pricingTF);
+		pricingTF.setColumns(10);
+		
+		lblPricing = new JLabel("Pricing");
+		lblPricing.setBounds(459, 326, 46, 14);
+		lblPricing.setVisible(false);
+		registerFrame.getContentPane().add(lblPricing);
+		
+		JLabel labelBG = new JLabel("");
+		labelBG.setHorizontalAlignment(SwingConstants.CENTER);
+		labelBG.setIcon(new ImageIcon("SalmaLogo.png"));
+		labelBG.setBounds(43, 64, 314, 367);
+		registerFrame.getContentPane().add(labelBG);
+		
+		JLabel labelBG2 = new JLabel("New label");
+		labelBG2.setIcon(new ImageIcon("background.jpg"));
+		labelBG2.setBounds(-71, -22, 481, 528);
+		registerFrame.getContentPane().add(labelBG2);
+		
+		JLabel labelDaftar = new JLabel("");
+		labelDaftar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String userNama = inputNama.getText();
+				String userEmail = inputEmail.getText();
+				String userPass = inputPass.getText();
+				String userUUID = UUID.randomUUID().toString();
+	
+				if(!Utils.verifyName(userNama)){
+					JOptionPane.showMessageDialog(null, "Masukkan Nama dengan Benar! Tidak ada numeric, minimum 4 chars!");
+				} else{					
+					if(!Utils.verifyEmail(userEmail)){
+						JOptionPane.showMessageDialog(null, "Masukkan Email dengan Benar! Harus dengan @gmail.com dan [Alpha | Num] !");
+					} else {
+						if(!Utils.verifyPass(userPass)){
+							JOptionPane.showMessageDialog(null, "Masukkan Password dengan Benar! Minimum 6 Character! [Alphanumeric]");
+						} else {							
+							User tempuser = null;
+							User tempstylist = null;
+							
+							for(User s : Main.stylistdata)
+							{
+								if(s.authEmail(userEmail)){
+									tempstylist = s;
+									break;
+								}
+							}
+							
+							for(User u : Main.userdata){
+								if(u.authEmail(userEmail)){
+									tempuser = u;
+									break;
+								}
+							}
+							
+							System.out.println("ComboBox: " + comboBox.getSelectedItem().toString());
+							if(tempuser != null || tempstylist != null){
+								JOptionPane.showMessageDialog(null, "Email/Data harus unik!");
+								
+							} else {
+								
+								if(comboBox.getSelectedItem().equals("Stylist"))
+								{
+									String userSpecialization = SpecializationTextField.getText();
+
+									Double userPricing = new Double(-1);
+									
+									try{
+										userPricing = Double.parseDouble(pricingTF.getText());
+									} catch(Exception ek){
+										ek.printStackTrace();
+									}
+									
+									if(userPricing != -1){
+										tempstylist = new Stylist(userUUID, userNama, userEmail, userPass, userSpecialization, userPricing);
+										System.out.println("Stylist : " +tempstylist.getClass());
+										Main.stylistdata.add(tempstylist);
+										registerFrame.dispose();
+										new manageMenu(tempstylist);
+									} else {
+										JOptionPane.showMessageDialog(null, "Please input Integer to Pricing!");
+									}
+								}
+								
+								else if(comboBox.getSelectedItem().equals("Customer"))
+								{
+									tempuser = new Customer(userUUID, userNama, userEmail, userPass, (double)0, 0);
+									System.out.println("Customer : " +tempuser.getClass());
+									Main.userdata.add(tempuser);
+									registerFrame.dispose();
+									System.out.println("test");
+									new manageMenu(tempuser);
+								}
+								
+								else {
+									JOptionPane.showMessageDialog(null, "Please pick your Role!");
+								}
+							}
+						}
+					}
+				}
+			}
+		});
+		labelDaftar.setHorizontalAlignment(SwingConstants.CENTER);
+		labelDaftar.setIcon(new ImageIcon("C:\\Users\\HP\\Documents\\Bahan Belajar\\ProjectOOP\\next.png"));
+		labelDaftar.setBounds(449, 389, 113, 81);
+		registerFrame.getContentPane().add(labelDaftar);
+		
+		JLabel labelBack = new JLabel("");
+		labelBack.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				registerFrame.dispose();
+				new MainMenu();
+			}
+		});
+		labelBack.setHorizontalAlignment(SwingConstants.CENTER);
+		labelBack.setIcon(new ImageIcon("C:\\Users\\HP\\Documents\\Bahan Belajar\\ProjectOOP\\cancel (1).png"));
+		labelBack.setBounds(547, 389, 83, 81);
+		registerFrame.getContentPane().add(labelBack);
+		registerFrame.setResizable(false);
+		registerFrame.setVisible(true);
+	}
+}

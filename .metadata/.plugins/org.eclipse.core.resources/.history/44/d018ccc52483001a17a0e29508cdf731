@@ -1,0 +1,248 @@
+package Menu;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+import Main.Main;
+import User.Customer;
+import User.Stylist;
+import User.User;
+import Utils.Utils;
+
+import java.awt.Font;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.UUID;
+import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
+import java.awt.Color;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
+
+public class Register {
+
+	private JFrame registerFrame;
+	private JTextField inputNama;
+	private JTextField inputEmail;
+	private JTextField inputPass;
+	private JTextField SpecializationTextField;
+	private JTextField pricingTF;
+	private JLabel lblPricing;
+
+
+	public Register() {
+		initialize();
+	}
+
+	private void initialize() {
+		registerFrame = new JFrame();
+		registerFrame.getContentPane().setBackground(Color.WHITE);
+		registerFrame.setTitle("SALMA - Register Page");
+		registerFrame.setBounds(100, 100, 737, 496);
+		registerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		registerFrame.getContentPane().setLayout(null);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setFont(new Font("Century Gothic", Font.PLAIN, 11));
+		comboBox.setBackground(new Color(255, 228, 181));
+		comboBox.setToolTipText("Choose your Role");
+		comboBox.addItem("Choose your Role");
+		comboBox.addItem("Customer");
+		comboBox.addItem("Stylist");
+		
+		comboBox.setBounds(440, 278, 224, 37);
+		registerFrame.getContentPane().add(comboBox);
+		
+		SpecializationTextField = new JTextField();
+		SpecializationTextField.setText("Your specialization.");
+		SpecializationTextField.setBounds(440, 406, 104, 23);
+		registerFrame.getContentPane().add(SpecializationTextField);
+		SpecializationTextField.setColumns(10);
+		SpecializationTextField.setVisible(false);
+		
+		JLabel LabelSpecialization = new JLabel("Specialization");
+		LabelSpecialization.setBounds(440, 381, 78, 14);
+		LabelSpecialization.setVisible(false);
+		
+		registerFrame.getContentPane().add(LabelSpecialization);
+	
+		
+		comboBox.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if(comboBox.getSelectedItem().equals("Stylist"))
+				{
+					LabelSpecialization.setVisible(true);
+					SpecializationTextField.setVisible(true);
+					lblPricing.setVisible(true);
+					pricingTF.setVisible(true);
+				}
+				else
+				{
+					LabelSpecialization.setVisible(false);
+					SpecializationTextField.setVisible(false);
+					lblPricing.setVisible(false);
+					pricingTF.setVisible(false);
+				}
+			}
+		});
+		
+		JLabel labelNama = new JLabel("Input Nama[exit]");
+		labelNama.setBounds(440, 95, 103, 16);
+		registerFrame.getContentPane().add(labelNama);
+		
+		JLabel labelEmail = new JLabel("Input Email");
+		labelEmail.setBounds(440, 155, 78, 16);
+		registerFrame.getContentPane().add(labelEmail);
+		
+		JLabel labelPass = new JLabel("Input Password");
+		labelPass.setBounds(440, 218, 103, 16);
+		registerFrame.getContentPane().add(labelPass);
+		
+		inputNama = new JTextField();
+		inputNama.setBounds(440, 122, 224, 22);
+		registerFrame.getContentPane().add(inputNama);
+		inputNama.setColumns(10);
+		
+		inputEmail = new JTextField();
+		inputEmail.setColumns(10);
+		inputEmail.setBounds(440, 184, 224, 22);
+		registerFrame.getContentPane().add(inputEmail);
+		
+		inputPass = new JPasswordField();
+		inputPass.setColumns(10);
+		inputPass.setBounds(440, 245, 224, 22);
+		registerFrame.getContentPane().add(inputPass);
+		
+		JLabel lblRegistrationMenu = new JLabel("Registration Menu");
+		lblRegistrationMenu.setFont(new Font("Century Gothic", Font.PLAIN, 27));
+		lblRegistrationMenu.setBounds(440, 36, 258, 34);
+		registerFrame.getContentPane().add(lblRegistrationMenu);
+		
+		JButton registerButton = new JButton("Daftar");
+		registerButton.setFont(new Font("Century Gothic", Font.PLAIN, 11));
+		registerButton.setBackground(new Color(255, 228, 181));
+		registerButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String userNama = inputNama.getText();
+				String userEmail = inputEmail.getText();
+				String userPass = inputPass.getText();
+				String userUUID = UUID.randomUUID().toString();
+				if(userNama.equals("exit")){
+					registerFrame.dispose();
+					new MainMenu();
+					return;
+				}
+				if(!Utils.verifyName(userNama)){
+					JOptionPane.showMessageDialog(null, "Masukkan Nama dengan Benar! Tidak ada numeric, minimum 4 chars!");
+				} else{					
+					if(!Utils.verifyEmail(userEmail)){
+						JOptionPane.showMessageDialog(null, "Masukkan Email dengan Benar! Harus dengan @gmail.com dan [Alpha | Num] !");
+					} else {
+						if(!Utils.verifyPass(userPass)){
+							JOptionPane.showMessageDialog(null, "Masukkan Password dengan Benar! Minimum 6 Character! [Alphanumeric]");
+						} else {							
+							User tempuser = null;
+							User tempstylist = null;
+							
+							for(User s : Main.stylistdata)
+							{
+								if(s.authEmail(userEmail)){
+									tempstylist = s;
+									break;
+								}
+							}
+							
+							for(User u : Main.userdata){
+								if(u.authEmail(userEmail)){
+									tempuser = u;
+									break;
+								}
+							}
+							
+							System.out.println("ComboBox: " + comboBox.getSelectedItem().toString());
+							if(tempuser != null || tempstylist != null){
+								JOptionPane.showMessageDialog(null, "Email/Data harus unik!");
+								
+							} else {
+								
+								if(comboBox.getSelectedItem().equals("Stylist"))
+								{
+									String userSpecialization = SpecializationTextField.getText();
+
+									Double userPricing = new Double(-1);
+									
+									try{
+										userPricing = Double.parseDouble(pricingTF.getText());
+									} catch(Exception e){
+										e.printStackTrace();
+									}
+									
+									if(userPricing != -1){
+										tempstylist = new Stylist(userUUID, userNama, userEmail, userPass, userSpecialization, userPricing);
+										System.out.println("Stylist : " +tempstylist.getClass());
+										Main.stylistdata.add(tempstylist);
+										registerFrame.dispose();
+										new manageMenu(tempstylist);
+									} else {
+										JOptionPane.showMessageDialog(null, "Please input Integer to Pricing!");
+									}
+								}
+								
+								else if(comboBox.getSelectedItem().equals("Customer"))
+								{
+									tempuser = new Customer(userUUID, userNama, userEmail, userPass, (double)0, 0);
+									System.out.println("Customer : " +tempuser.getClass());
+									Main.userdata.add(tempuser);
+									registerFrame.dispose();
+									System.out.println("test");
+									new manageMenu(tempuser);
+								}
+								
+								else {
+									JOptionPane.showMessageDialog(null, "Please pick your Role!");
+								}
+							}
+						}
+					}
+				}
+			}
+		});
+		
+		registerButton.setBounds(556, 334, 108, 47);
+		registerFrame.getContentPane().add(registerButton);
+		
+		pricingTF = new JTextField();
+		pricingTF.setText("Input Pricing");
+		pricingTF.setBounds(440, 346, 91, 22);
+		pricingTF.setVisible(false);
+		registerFrame.getContentPane().add(pricingTF);
+		pricingTF.setColumns(10);
+		
+		lblPricing = new JLabel("Pricing");
+		lblPricing.setBounds(440, 326, 46, 14);
+		lblPricing.setVisible(false);
+		registerFrame.getContentPane().add(lblPricing);
+		
+		JLabel labelBG = new JLabel("");
+		labelBG.setHorizontalAlignment(SwingConstants.CENTER);
+		labelBG.setIcon(new ImageIcon("C:\\Users\\HP\\Documents\\Bahan Belajar\\ProjectOOP\\SalmaLogo2.png"));
+		labelBG.setBounds(70, 64, 314, 365);
+		registerFrame.getContentPane().add(labelBG);
+		
+		JLabel labelBG2 = new JLabel("New label");
+		labelBG2.setIcon(new ImageIcon("C:\\Users\\HP\\Documents\\Bahan Belajar\\ProjectOOP\\white-minimalist-Large-1.jpg"));
+		labelBG2.setBounds(-71, -22, 481, 496);
+		registerFrame.getContentPane().add(labelBG2);
+		registerFrame.setResizable(false);
+		registerFrame.setVisible(true);
+	}
+}

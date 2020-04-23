@@ -22,7 +22,6 @@ public class Booking {
 	private String dateSchedule;
 	private String serviceOrder;
 	private String bookDate;
-	@Override
 	public String toString(){
 		return CustomerID + "#" + StylistID + "#" + StylistName + "#" + serviceOrder + "#" + dateSchedule + "#" + bookDate + "#";
 	}

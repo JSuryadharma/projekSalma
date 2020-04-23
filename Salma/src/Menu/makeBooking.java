@@ -24,6 +24,7 @@ import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.awt.event.ActionEvent;
@@ -33,6 +34,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import java.awt.Color;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 
 public class makeBooking {
 
@@ -55,10 +58,10 @@ public class makeBooking {
 	JLabel inUUID;
 	DateFormat dateformat = new SimpleDateFormat("EEEE ,dd-MM-YYYY");
 	String bookDate = dateformat.format(calendar.getTime());
-	private JButton btnBacktoManageMenu;
 	private JLabel lblPricing;
 	private JLabel inPricing;
 	private JTextField txtYourBalance;
+	private JLabel lblNewLabel;
 
 	public makeBooking(User currUser) {
 		this.currUser = currUser;
@@ -94,7 +97,8 @@ public class makeBooking {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 592, 426);
+		frame.getContentPane().setBackground(Color.WHITE);
+		frame.setBounds(350, 150, 617, 442);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -123,75 +127,96 @@ public class makeBooking {
 		
 		JLabel lblPickYourStylish = new JLabel("Pick Your Personal Stylish...");
 		lblPickYourStylish.setFont(new Font("Century Gothic", Font.PLAIN, 13));
-		lblPickYourStylish.setBounds(53, 37, 172, 22);
+		lblPickYourStylish.setBounds(365, 61, 172, 22);
 		frame.getContentPane().add(lblPickYourStylish);
 		
 		JButton btnMakeABook = new JButton("Book");
+		btnMakeABook.setBackground(new Color(255, 228, 181));
 		btnMakeABook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(sUUID.equals("") || sName.equals("") || sSpecialization.equals("")){
 					System.out.println(sUUID + sName + sSpecialization);
 					JOptionPane.showMessageDialog(null, "Please pick a stylist from table!");
 				} else {
-					if(currUser instanceof PremiumCustomer){
-						if(((Customer)currUser).getBalance() >= ((PremiumCustomer)currUser).getPricing(sPricing)){
-							
-							double costReduction = ((PremiumCustomer)currUser).costReduction(sPricing);
-							JOptionPane.showMessageDialog(null, "Yey! You just got discount by: " + costReduction);
-							System.out.println("reduction: " + costReduction);
-							
-							((Customer)currUser).reduceBalance(sPricing);
-							double pricing = ((PremiumCustomer)currUser).getPricing(sPricing);
-							JOptionPane.showMessageDialog(null, "Your balance has been reduced by: " + pricing + " !");
-							System.out.println("pricing: " + pricing);
-							
-							String dateSchedule = comboBox.getSelectedItem().toString();
-							Booking book = new Booking(currUser.getUUID(), sUUID, sName, sSpecialization, dateSchedule, bookDate);
-							((Customer)currUser).booklist.add(book);
-							((Customer)currUser).setnTransaksi(((Customer)currUser).getnTransaksi() + 1);
-							
-							JOptionPane.showMessageDialog(null, "Book Added Successfully! Printing Your Payment Receipt...");
-							Payment paymentTemp = new Payment(dateformat.format(calendar.getTime()), sSpecialization, sPricing);
-							((Customer)currUser).addPayment(paymentTemp);
-							frame.dispose();
-							new manageMenu(currUser);
-						} else {
-							JOptionPane.showMessageDialog(null, "Your balance is Insufficient! Please Top Up your balance!");
+					ArrayList <Booking> currUserBooking = ((Customer)currUser).getBooklist();
+					int transactionsize = currUserBooking.size();
+					
+					boolean isDateExist = false;
+					
+					for(int i=0; i<transactionsize; i++) {
+						
+						String curDate = currUserBooking.get(i).getDateSchedule();
+						String dateSchedule = comboBox.getSelectedItem().toString();
+						
+						if(curDate.equals(dateSchedule)) {
+							isDateExist = true;
+							break;
 						}
-					} else {
-						if(((Customer)currUser).getBalance() >= sPricing){
-							((Customer)currUser).reduceBalance(sPricing);
-							double pricing = (double)sPricing;
-							JOptionPane.showMessageDialog(null, "Your saldo has been reduced by: " + pricing + " !");
-							String dateSchedule = comboBox.getSelectedItem().toString();
-							Booking book = new Booking(currUser.getUUID(), sUUID, sName, sSpecialization, dateSchedule, bookDate);
-							((Customer)currUser).booklist.add(book);
-							((Customer)currUser).setnTransaksi(((Customer)currUser).getnTransaksi() + 1);
-							JOptionPane.showMessageDialog(null, "Book Added Successfully! Printing Your Payment Receipt...");
-							Payment paymentTemp = new Payment(dateformat.format(calendar.getTime()), sSpecialization, sPricing);
-							((Customer)currUser).addPayment(paymentTemp);
-							JOptionPane.showMessageDialog(null, "Book Added Successfully!");
-							frame.dispose();
-							new manageMenu(currUser);
+					}
+					
+					if(isDateExist){
+						JOptionPane.showMessageDialog(null, "You already make a booking that day!");
+					}
+					else if (!isDateExist){					
+						if(currUser instanceof PremiumCustomer){
+							if(((Customer)currUser).getBalance() >= ((PremiumCustomer)currUser).getPricing(sPricing)){
+								
+								double costReduction = ((PremiumCustomer)currUser).costReduction(sPricing);
+								JOptionPane.showMessageDialog(null, "Yey! You just got discount by: " + costReduction);
+								
+								double pricing = ((PremiumCustomer)currUser).getPricing(sPricing);
+								((Customer)currUser).reduceBalance(pricing);
+								JOptionPane.showMessageDialog(null, "Your balance has been reduced by: " + pricing + " !");
+								
+								String dateSchedule = comboBox.getSelectedItem().toString();
+								Booking book = new Booking(currUser.getUUID(), sUUID, sName, sSpecialization, dateSchedule, bookDate);
+								((Customer)currUser).booklist.add(book);
+								((Customer)currUser).setnTransaksi(((Customer)currUser).getnTransaksi() + 1);
+								
+								JOptionPane.showMessageDialog(null, "Book Added Successfully! Printing Your Payment Receipt...");
+								Payment paymentTemp = new Payment(dateformat.format(calendar.getTime()), sSpecialization, sPricing);
+								((Customer)currUser).addPayment(paymentTemp);
+								frame.dispose();
+								new manageMenu(currUser);
+							} else {
+								JOptionPane.showMessageDialog(null, "Your balance is Insufficient! Please Top Up your balance!");
+							}
+							
 						} else {
-							JOptionPane.showMessageDialog(null, "Your Saldo is Insufficient! Please Top Up your Saldo!");
+							if(((Customer)currUser).getBalance() >= sPricing){
+								((Customer)currUser).reduceBalance(sPricing);
+								double pricing = (double)sPricing;
+								JOptionPane.showMessageDialog(null, "Your saldo has been reduced by: " + pricing + " !");
+								String dateSchedule = comboBox.getSelectedItem().toString();
+								Booking book = new Booking(currUser.getUUID(), sUUID, sName, sSpecialization, dateSchedule, bookDate);
+								((Customer)currUser).booklist.add(book);
+								((Customer)currUser).setnTransaksi(((Customer)currUser).getnTransaksi() + 1);
+								JOptionPane.showMessageDialog(null, "Book Added Successfully! Printing Your Payment Receipt...");
+								Payment paymentTemp = new Payment(dateformat.format(calendar.getTime()), sSpecialization, sPricing);
+								((Customer)currUser).addPayment(paymentTemp);
+								JOptionPane.showMessageDialog(null, "Book Added Successfully!");
+								frame.dispose();
+								new manageMenu(currUser);
+							} else {
+								JOptionPane.showMessageDialog(null, "Your Saldo is Insufficient! Please Top Up your Saldo!");
+							}
 						}
 					}
 				}
 			}
 		});
-		btnMakeABook.setBounds(298, 201,133, 47);
+		btnMakeABook.setBounds(365, 227,105, 47);
 		frame.getContentPane().add(btnMakeABook);
 		
 		txtServiceType = new JTextField();
 		txtServiceType.setText("Service Type..");
-		txtServiceType.setBounds(355, 105,133, 20);
+		txtServiceType.setBounds(365, 164,133, 20);
 		frame.getContentPane().add(txtServiceType);
 		txtServiceType.setColumns(10);
 		txtServiceType.setEditable(false);
 		
 		JLabel lblServiceOrder = new JLabel("Service Order");
-		lblServiceOrder.setBounds(355, 80, 76, 14);
+		lblServiceOrder.setBounds(365, 139, 76, 14);
 		frame.getContentPane().add(lblServiceOrder);
 		
 		
@@ -205,6 +230,7 @@ public class makeBooking {
 		}
 		
 		comboBox = new JComboBox();
+		comboBox.setBackground(new Color(255, 222, 173));
 
 		comboBox.setSelectedItem("Pick a schedule");
 		
@@ -213,14 +239,15 @@ public class makeBooking {
 			comboBox.addItem(schedule[i]);
 		}
 		
-		comboBox.setBounds(357, 150, 133, 21);
+		comboBox.setBounds(365, 195, 133, 21);
 		comboBox.setToolTipText("Pick a schedule!");
 		
 		
 		frame.getContentPane().add(comboBox);
 		
 		dateShowlbl = new JTextField();
-		dateShowlbl.setBounds(326, 22, 204, 30);
+		dateShowlbl.setHorizontalAlignment(SwingConstants.CENTER);
+		dateShowlbl.setBounds(365, 94, 133, 30);
 		
 		dateShowlbl.setEditable(false);
 		dateShowlbl.setText(dateformat.format(calendar.getTime()));
@@ -230,7 +257,7 @@ public class makeBooking {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(326, 267, 196, 105);
+		panel.setBounds(365, 285, 196, 105);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -255,10 +282,6 @@ public class makeBooking {
 		inName.setBounds(106, 32, 46, 14);
 		panel.add(inName);
 		
-		inSpecialization = new JLabel("Please select a data..");
-		inSpecialization.setBounds(106, 56, 46, 14);
-		panel.add(inSpecialization);
-		
 		lblPricing = new JLabel("Pricing");
 		lblPricing.setBounds(10, 81, 71, 14);
 		panel.add(lblPricing);
@@ -267,27 +290,39 @@ public class makeBooking {
 		inPricing.setBounds(106, 81, 46, 14);
 		panel.add(inPricing);
 		
-		btnBacktoManageMenu = new JButton("Back to Manage Menu");
-		btnBacktoManageMenu.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-				new manageMenu(currUser);
-			}
-		});
-		btnBacktoManageMenu.setBounds(441, 201, 133, 47);
-		frame.getContentPane().add(btnBacktoManageMenu);
+		inSpecialization = new JLabel("Please select a data..");
+		inSpecialization.setBounds(106, 56, 46, 14);
+		panel.add(inSpecialization);
 		
 		txtYourBalance = new JTextField();
 		txtYourBalance.setText("Your Balance");
-		txtYourBalance.setBounds(53, 366, 86, 20);
+		txtYourBalance.setBounds(72, 389, 86, 20);
 		txtYourBalance.setText(((Customer)currUser).getBalance().toString());
 		txtYourBalance.setEditable(false);
 		frame.getContentPane().add(txtYourBalance);
 		txtYourBalance.setColumns(10);
 		
 		JLabel lblCurrBalance = new JLabel("Curr Balance:");
-		lblCurrBalance.setBounds(41, 348, 66, 14);
+		lblCurrBalance.setBounds(72, 369, 66, 14);
 		frame.getContentPane().add(lblCurrBalance);
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(MainMenu.class.getResource("/IMAGE/background.jpg")));
+		lblNewLabel.setBounds(0, 0, 297, 464);
+		frame.setUndecorated(true);
+		frame.getContentPane().add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				frame.dispose();
+				new manageMenu(currUser);
+			}
+		});
+		lblNewLabel_1.setIcon(new ImageIcon(MainMenu.class.getResource("/IMAGE/close.png")));
+		lblNewLabel_1.setBounds(559, 21, 32, 47);
+		frame.getContentPane().add(lblNewLabel_1);
 		frame.setResizable(false);
 		frame.setVisible(true);
 	}

@@ -53,5 +53,27 @@ public class Customer extends User {
 	public void addPayment(Payment payment){
 		receipt.add(payment);
 	}
+
+	public ArrayList<Booking> getBooklist() {
+		return booklist;
+	}
+
+	public void setBooklist(ArrayList<Booking> booklist) {
+		this.booklist = booklist;
+	}
+
+	public ArrayList<Payment> getReceipt() {
+		return receipt;
+	}
+
+	public void setReceipt(ArrayList<Payment> receipt) {
+		this.receipt = receipt;
+	}
+
+	public void setBalance(Double balance) {
+		this.balance = balance;
+	}
+	
+	
 	
 }
